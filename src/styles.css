@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+body 
+{
+    background-color: pink;
+    background-image: url("Watermelon.jpeg");
+    background-size: cover; /* Resize the background image to cover the entire container */
+    margin:0;
+}
+
+
+#maintitle
+{
+    color: white;
+    font-size: 50px;
+    position: absolute;
+    left:15%;
+    top:20%;
+
+}
