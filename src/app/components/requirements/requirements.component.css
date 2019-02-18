@@ -1,4 +1,15 @@
-.test {
-    text-align: center;
-    margin-top: 70px;
+.container-fluid {
+    background-color:#ACED8B;
+    margin: 100px;
+    padding: 50px;
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    color: black;
+}
+.row {
+    background-color: #559C00;
+    padding: 10px;
+    height: auto;
+    width: auto;
 }

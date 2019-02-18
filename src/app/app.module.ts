@@ -10,6 +10,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { IssuesComponent } from './components/issues/issues.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
+import { NewRequirementsComponent } from './components/new-requirements/new-requirements.component';
+import { InProgressRequirementsComponent } from './components/in-progress-requirements/in-progress-requirements.component';
+import { AcceptedRequirementsComponent } from './components/accepted-requirements/accepted-requirements.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { RequirementsComponent } from './components/requirements/requirements.co
     NavigationComponent,
     IssuesComponent,
     MessagesComponent,
-    RequirementsComponent
+    RequirementsComponent,
+    NewRequirementsComponent,
+    InProgressRequirementsComponent,
+    AcceptedRequirementsComponent
   ],
   imports: [
     BrowserModule,
