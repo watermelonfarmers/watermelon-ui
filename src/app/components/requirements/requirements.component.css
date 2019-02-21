@@ -1,4 +1,15 @@
-.test {
-    text-align: center;
-    margin-top: 70px;
+.container-fluid {
+    color: black;
+    box-sizing: border-box;
+    margin-top: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: white;
+
 }
+/* .row {
+    padding: 50px;
+    background-color: white;
+    height: auto;
+    width: auto;
+} */

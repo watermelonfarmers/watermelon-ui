@@ -1,16 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { WatermelonRouter } from './app.router';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
+import { NewRequirementsComponent } from './components/new-requirements/new-requirements.component';
+import { InProgressRequirementsComponent } from './components/in-progress-requirements/in-progress-requirements.component';
+import { AcceptedRequirementsComponent } from './components/accepted-requirements/accepted-requirements.component';
+import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
+import { EditRequirementFormComponent } from './components/edit-requirement-form/edit-requirement-form.component';
 
 @NgModule({
   declarations: [
@@ -19,13 +24,18 @@ import { RequirementsComponent } from './components/requirements/requirements.co
     NavigationComponent,
     IssuesComponent,
     MessagesComponent,
-    RequirementsComponent
+    RequirementsComponent,
+    NewRequirementsComponent,
+    InProgressRequirementsComponent,
+    AcceptedRequirementsComponent,
+    RequirementFormComponent,
+    EditRequirementFormComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    WatermelonRouter,
-    FormsModule
+    FormsModule,
+    WatermelonRouter
   ],
   providers: [],
   bootstrap: [AppComponent]
