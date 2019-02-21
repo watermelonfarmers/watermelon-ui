@@ -5,6 +5,7 @@ import { WatermelonRouter } from './app.router';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { IssuesComponent } from './components/issues/issues.component';
@@ -13,6 +14,8 @@ import { RequirementsComponent } from './components/requirements/requirements.co
 import { NewRequirementsComponent } from './components/new-requirements/new-requirements.component';
 import { InProgressRequirementsComponent } from './components/in-progress-requirements/in-progress-requirements.component';
 import { AcceptedRequirementsComponent } from './components/accepted-requirements/accepted-requirements.component';
+import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
+import { EditRequirementFormComponent } from './components/edit-requirement-form/edit-requirement-form.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +27,14 @@ import { AcceptedRequirementsComponent } from './components/accepted-requirement
     RequirementsComponent,
     NewRequirementsComponent,
     InProgressRequirementsComponent,
-    AcceptedRequirementsComponent
+    AcceptedRequirementsComponent,
+    RequirementFormComponent,
+    EditRequirementFormComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     WatermelonRouter
   ],
   providers: [],

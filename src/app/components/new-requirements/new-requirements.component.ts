@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {REQUIREMENTS_TEMP} from '../requirements/mock-requirements';
 
-
 @Component({
   selector: 'app-new-requirements',
   templateUrl: './new-requirements.component.html',
@@ -16,6 +15,10 @@ export class NewRequirementsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addRequirements(): void {
+    window.location.href = '/requirements/add';
   }
 
 }
