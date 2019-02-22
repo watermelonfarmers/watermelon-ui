@@ -9,7 +9,8 @@ branches:
 before_script:
 - npm install -g @angular/cli
 script:
-- ng build --prod --base-href https://watermelonfarmers.github.io/watermelon-ui/
+- ng build --prod --base-href="/watermelon-ui/"
+- cp dist/watermelon-ui/index.html dist/watermelon-ui/404.html
 deploy:
   provider: pages
   skip_cleanup: true
