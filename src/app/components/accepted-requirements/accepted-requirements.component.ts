@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import {REQUIREMENTS_TEMP} from '../requirements/mock-requirements';
+import { RequirementsComponent } from '../requirements/requirements.component';
+import { RequirementService } from '../../services/requirement.service';
 
 @Component({
   selector: 'app-accepted-requirements',
   templateUrl: './accepted-requirements.component.html',
   styleUrls: ['./accepted-requirements.component.css']
 })
-export class AcceptedRequirementsComponent implements OnInit {
+export class AcceptedRequirementsComponent extends RequirementsComponent implements OnInit {
+  
+  constructor(requirementService : RequirementService) {
+    super(requirementService);
+  }
 
   type: String = 'Accepted Requirements';
-
-  requirements = REQUIREMENTS_TEMP;
-
-  constructor() { }
+  isDataAvailable = false;
 
   ngOnInit() {
+    this.getRequirements();
   }
 
 }

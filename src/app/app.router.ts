@@ -30,7 +30,7 @@ const appRoutes: Routes = [
         component: RequirementFormComponent
     },
     {
-        path: 'requirements/edit',
+        path: 'requirements/edit/:id',
         component: EditRequirementFormComponent
     },
     {

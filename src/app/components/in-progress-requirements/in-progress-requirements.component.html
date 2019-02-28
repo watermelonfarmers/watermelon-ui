@@ -1,26 +1,51 @@
-<div class = "col-md-4">
-  <table class="table table-hover table-bordered">
-    <tr>
-      <th colspan="5">{{type}}</th>
-    </tr>
-    <tr>
-      <th>Requirement</th>
-      <th>Description</th>
-      <th>Created By</th>
-      <th>Assigned To</th>
-      <th></th>
-    </tr>
-    <tr *ngFor="let requirement of requirements" routerLink = '/requirements/edit'>
-      <td>{{requirement.name}}</td>
-      <td>{{requirement.description}}</td>
-      <td>{{requirement.createdBy}}</td>
-      <td>{{requirement.assignedTo}}</td>
-      <td><input type="button" value="Delete" class="btn btn-danger" onclick="cancel()"></td>
-    </tr>
-    <tr>
-      <td colspan="5">
-        <input type="submit" value="Add Requirement" class="btn btn-primary" routerLink="/requirements/add">
-      </td>
-    </tr>
-  </table>
-</div>
+<div *ngIf="isDataAvailable; else noData">
+    <div class = "col-md-4">
+      <div class='table-responsive'>
+      <table class="table table-hover table-bordered">
+        <tr class="requirement_type">
+          <th colspan="4">{{type}}</th>
+        </tr>
+        <tr>
+          <th>Requirement</th>
+          <th>Assigned To</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let requirement of inProgressRequirements">
+          <td>{{requirement.title}}</td>
+          <td>{{requirement.assigned_to}}</td>
+          <td><input type="button" value="Details" class="btn btn-primary" routerLink='/requirements/edit/{{requirement.id}}'></td>
+          <td><input type="button" value="Delete" class="btn btn-danger" (click) = deleteRequirement(requirement.id) ></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" value="Add Requirement" class="btn btn-primary" routerLink="/requirements/add">
+          </td>
+        </tr>
+      </table>
+    </div>
+    </div>
+    </div>
+    
+    <ng-template #noData>
+        <div class = "col-md-4">
+            <div class='table-responsive'>
+            <table class="table table-hover table-bordered">
+              <tr class="requirement_type">
+                <th colspan="4">{{type}}</th>
+              </tr>
+              <tr>
+                <th>Requirement</th>
+                <th>Assigned To</th>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <input type="submit" value="Add Requirement" class="btn btn-primary" routerLink="/requirements/add">
+                </td>
+              </tr>
+            </table>
+          </div>
+          </div>
+    </ng-template>

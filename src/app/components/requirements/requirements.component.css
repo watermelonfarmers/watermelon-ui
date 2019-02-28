@@ -1,15 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
 .container-fluid {
-    color: black;
+    margin-top: 100px;
+    /* color: black;
     box-sizing: border-box;
     margin-top: 100px;
     padding-top: 50px;
-    padding-bottom: 50px;
-    background-color: white;
+    padding-bottom: 50px; */
 
 }
-/* .row {
-    padding: 50px;
-    background-color: white;
-    height: auto;
-    width: auto;
-} */
+
+.row {
+    padding: 10px;
+}

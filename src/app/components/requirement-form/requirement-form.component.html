@@ -1,26 +1,40 @@
 <div class="container">
   <h1>Add Requirement</h1>
-  <form (ngSubmit)="onSubmit()" #requirementForm="ngForm">
+  <form (ngSubmit)="addRequirement(ngForm)" #requirementForm="ngForm" >
     <div class="form-group">
       <label for="title">Requirement Title</label>
-      <input type="text" class="form-control" id="title" required>
+      <input type="text" class="form-control" id="title" 
+        required
+        [(ngModel)] = "newRequirement.title" name="title">
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <input type="text" class="form-control" id="description" required>
+        <input type="text" class="form-control" id="description" 
+          required
+          [(ngModel)] = "newRequirement.description" name="description">
     </div>
     <div class="form-group">
       <label for="status">Status</label>
-      <select class="form-control" id="status" required>
-        <option *ngFor="let stat of status" [value] = "stat">{{stat}}</option>
+      <select class="form-control" id="status" 
+        required
+        [(ngModel)] = "newRequirement.status" name="status">
+        <option *ngFor="let stat of statusOpts" [value] = "stat">{{stat}}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="assignToMember">Assign To Member</label>
-      <select class="form-control" id="assignToMember" required>
+      <label for="assigned_to">Assign To Member</label>
+      <select class="form-control" id="assigned_to" 
+        required
+        [(ngModel)] = "newRequirement.assigned_to" name="assigned_to">
         <option *ngFor="let member of assignToMember" [value] = "member">{{member}}</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="due_date">Due Date</label>
+      <input type="date" class="form-control" id="due_date" 
+        required
+        [(ngModel)] = "newRequirement.due_date" name="due_date">
+    </div>
+    <button type="button" class="btn btn-success" (click) = "addRequirement(ngForm)" routerLink='/requirements'>Add Requirement</button>
   </form>
-  <button type="button" class="btn btn-success" (click)="addRequirement()" routerLink='/requirements'>Add Requirement</button>
 </div>

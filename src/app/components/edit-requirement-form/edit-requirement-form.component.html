@@ -1,26 +1,33 @@
 <div class="container">
   <h1>Edit Requirement</h1>
-  <form (ngSubmit)="onSubmit()" #editRequirementForm="ngForm">
+  <form (ngSubmit)="editRequirement(ngForm)" #editRequirementForm="ngForm">
     <div class="form-group">
       <label for="title">Requirement Title</label>
-      <input type="text" class="form-control" id="title" required>
+      <input type="text" class="form-control" id="title" required [(ngModel)]="requirement.title" name = "title">
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <input type="text" class="form-control" id="description" required>
+        <input type="text" class="form-control" id="description" required [(ngModel)]="requirement.description" name = "description">
     </div>
     <div class="form-group">
       <label for="status">Status</label>
-      <select class="form-control" id="status" required>
-        <option *ngFor="let stat of status" [value] = "stat">{{stat}}</option>
+      <select class="form-control" id="status" 
+          required
+          [(ngModel)]="requirement.status" name = "status">
+        <option *ngFor="let stat of statusOpts" [value]='stat'>{{stat}}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="assignToMember">Assign To Member</label>
-      <select class="form-control" id="assignToMember" required>
-        <option *ngFor="let member of assignToMember" [value] = "member">{{member}}</option>
+      <label for="assigned_to">Assign To</label>
+      <select class="form-control" id="assigned_to"
+            required 
+            [(ngModel)]="requirement.assigned_to" name = "assigned_to">
+        <option *ngFor="let member of assigned_to" [value]="member">{{member}}</option>
       </select>
     </div>
+    <div class = "button-container">
+        <button type="button" class="btn btn-success" (click) = "editRequirement(ngForm)" routerLink='/requirements'>Edit Requirement</button>
+        <button type="button" class="btn btn-danger" routerLink = "/requirements">Go Back</button>      
+    </div>
   </form>
-  <button type="button" class="btn btn-success" (click)="editRequirement()" routerLink='/requirements'>Edit Requirement</button>
 </div>

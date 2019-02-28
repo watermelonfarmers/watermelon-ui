@@ -1,4 +1,26 @@
+* {
+    box-sizing: border-box;
+}
 .col-md-4{
+    background-color: none;
+    padding-top:20px;
+    padding-bottom: 20px;
+    height: 100%;
+    margin-left:none;
+    margin-right:none;
+}
+.table {
     background-color: white;
+    margin-left: none;
+    margin-right: none;
+    height: 100%;
+}
 
+td {
+    word-break:break-word;
+    overflow: scroll;
+}
+
+.requirement_type {
+    background-color: rgba(72, 254, 152);
 }

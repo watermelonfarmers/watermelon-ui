@@ -4,3 +4,7 @@
     background-color: white;
     padding: 20px;
 }
+
+.button-container {
+    display: inline-block;
+}
