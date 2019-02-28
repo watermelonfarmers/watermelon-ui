@@ -16,6 +16,8 @@ import { InProgressRequirementsComponent } from './components/in-progress-requir
 import { AcceptedRequirementsComponent } from './components/accepted-requirements/accepted-requirements.component';
 import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
 import { EditRequirementFormComponent } from './components/edit-requirement-form/edit-requirement-form.component';
+import { LoginComponent } from "./components/login/login/login.component";
+import { RegisterComponent } from "./components/login/register/register.component";
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { EditRequirementFormComponent } from './components/edit-requirement-form
     AcceptedRequirementsComponent,
     RequirementFormComponent,
     EditRequirementFormComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
