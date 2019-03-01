@@ -6,6 +6,8 @@ import { RequirementsComponent } from './components/requirements/requirements.co
 import { IssuesComponent } from "./components/issues/issues.component";
 import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
 import { EditRequirementFormComponent} from './components/edit-requirement-form/edit-requirement-form.component';
+import { LoginComponent } from './components/login/login/login.component';
+import { RegisterComponent } from './components/login/register/register.component';
 
 const appRoutes: Routes = [
     {
@@ -36,6 +38,14 @@ const appRoutes: Routes = [
     {
         path: 'issues',
         component: IssuesComponent
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'register',
+        component: RegisterComponent
     }
 
 ];

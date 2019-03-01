@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { requirement } from '../requirements/requirement'
 import { RequirementService } from '../../services/requirement.service';
 import { switchMap } from 'rxjs/operators';
+import { NgForm } from "@angular/forms";
+
 @Component({
   selector: 'app-edit-requirement-form',
   templateUrl: './edit-requirement-form.component.html',
@@ -13,6 +15,7 @@ export class EditRequirementFormComponent implements OnInit {
   statusOpts: string[] = ['NEW', 'IN PROGRESS', 'ACCEPTED'];
   assigned_to: string[] = ['User 1', 'User 2', 'User 3', 'User 4', 'User 5'];
   submitted = false;
+  ngForm: NgForm;
 
   requirement = requirement.getDefault();
 
