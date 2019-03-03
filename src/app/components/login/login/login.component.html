@@ -11,10 +11,10 @@
     <div class="row" >
       <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3" id="login">
 
-          <div class="form-group"><label>Username</label><input placeholder="username" class="form-control"></div>
-          <div class="form-group"><label>Password</label><input name="passowrd" type="password" placeholder="password" class="form-control"></div>
+          <div class="form-group"><label>User Name</label><input [(ngModel)] = "user.name" placeholder="User Name" class="form-control"></div>
+          <div class="form-group"><label>Password</label><input [(ngModel)] = "user.password" name="passowrd" type="password" placeholder="Password" class="form-control"></div>
           <div class="form-group text-center">
-            <button type="button"  class="btn btn-accent">Login</button>
+            <button type="button" (click) = "login()" class="btn btn-accent">Login</button>
           </div>
 
       </div>

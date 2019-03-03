@@ -18,6 +18,7 @@ import { RequirementFormComponent } from './components/requirement-form/requirem
 import { EditRequirementFormComponent } from './components/edit-requirement-form/edit-requirement-form.component';
 import { LoginComponent } from "./components/login/login/login.component";
 import { RegisterComponent } from "./components/login/register/register.component";
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { RegisterComponent } from "./components/login/register/register.componen
     FormsModule,
     WatermelonRouter
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,12 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MessagesService } from './messages.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent {
+export class MessagesComponent implements OnInit{
+  ngOnInit(): void {
+    setInterval(() => {
+      this.messagesService.getMessages().subscribe((response) => {
+        this.groupChats[0].messages = response;
+      })
+    }, 1000);
+  }
   title = 'watermelon-app';
 
   //watermelon server endpoint URL for hello test 
@@ -16,21 +25,14 @@ export class MessagesComponent {
   hello: any;
   userInput: string;
   testDate = new Date();
-  user = { // represents signed in user.
-    id: 1,
-    firstName: "John",
-    lastName: "Snow",
-    userName: "King in the North"
-  };
+  user;
   groupChats: any[] = [{
     firstName: "John", lastName: "Snow", fullName: "John Snow", createdDate: this.testDate,
-    messages: [{message: "This is a test", date: new Date(), userId: 1}, {message: "This is also a test", date: new Date(), userId: 2}, {message: "This is the last test", date: new Date(), userId: 1}]
-  }, {
-    firstName: "Ned", lastName: "Stark", fullName: "Ned Stark", createdDate: this.testDate,
-    messages: [{message: "This is a test", date: new Date(), userId: 3}, {message: "This is also a test", date: new Date(), userId: 1}, {message: "This is the last test", date: new Date(), userId: 3}]
-  }];
+    messages: []}];
   selectedGroup = this.groupChats[0];
-  constructor(private http: HttpClient) {console.log("testDate is" + this.testDate)}
+  constructor(private http: HttpClient, private messagesService : MessagesService, private userService: UserService) {console.log("testDate is" + this.testDate)
+  this.user = this.userService.getUser();
+}
 
   //method to perform the get request to the watermelon server
   //expecting hello text response
@@ -42,11 +44,23 @@ export class MessagesComponent {
   }
   send_message() {
     console.log(this.userInput);
-    const newMessage = {message: this.userInput, date: new Date(), userId: this.user.id};
+    const date = new Date();
+    const newMessage = {
+      created: date,
+      created_by_user: this.user.userName,
+      id: (+new Date()) +"",
+      last_modified: date,
+      message: this.userInput,
+};
     this.selectedGroup.messages.push(newMessage);
+    this.messagesService.creatMessage(newMessage).subscribe((response) => {
+      return response;
+    });
     this.userInput = "";
   }
-
+  createChatGroup(){
+    this.messagesService.createChat();
+  }
   changeSelectedGroup(group) {
     this.selectedGroup = group;
   }
