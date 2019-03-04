@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MessagesService } from './messages.service';
 import { UserService } from 'src/app/services/user.service';
@@ -8,15 +8,20 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit{
+export class MessagesComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
-    setInterval(() => {
+    this.subscription = setInterval(() => {
       this.messagesService.getMessages().subscribe((response) => {
         this.groupChats[0].messages = response;
       })
-    }, 1000);
+    }, 5000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.subscription);
   }
   title = 'watermelon-app';
+  subscription;
 
   //watermelon server endpoint URL for hello test 
   readonly TEST_URL = 'https://watermelon-service.herokuapp.com/hello?fbclid=IwAR1_y8TdSRchf7GRUYW9IAFs-GfPnDwn-vHVH2OFUlwypmkqRhBSPWpNgWA';
