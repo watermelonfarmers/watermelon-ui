@@ -13,6 +13,7 @@ export class AuthenticationService {
   private authenticated: boolean = false;
     private originUrl: string = null;
     private loginUrl: string = "https://watermelon-service.herokuapp.com/api/login";
+    private logoutUrl: string = "https://watermelon-service.herokuapp.com/api/logout";
     private user_id: string = null
 
     constructor(private http: HttpClient) {
@@ -87,6 +88,14 @@ export class AuthenticationService {
         sessionStorage.removeItem('auth_token');
         sessionStorage.removeItem('user_id');
         sessionStorage.removeItem('user');
+
+        let headers = new HttpHeaders();
+        headers = headers.set('Accept', 'application/json')
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set('X-Requested-With', 'XMLHttpRequest');
+ 
+        this.http.get(this.logoutUrl, {headers:headers, withCredentials:true}).subscribe(response => console.log(response));
+
     }
 
     public getHeaders(): HttpHeaders {
