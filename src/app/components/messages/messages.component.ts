@@ -58,9 +58,9 @@ export class MessagesComponent implements OnInit{
     });
     this.userInput = "";
   }
-  // createChatGroup(){
-  //   this.messagesService.createChat();
-  // }
+  createChatGroup(){
+    //this.messagesService.createChat();
+  }
   changeSelectedGroup(group) {
     this.selectedGroup = group;
   }

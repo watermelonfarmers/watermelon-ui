@@ -8,6 +8,7 @@ import { RequirementFormComponent } from './components/requirement-form/requirem
 import { EditRequirementFormComponent} from './components/edit-requirement-form/edit-requirement-form.component';
 import { LoginComponent } from './components/login/login/login.component';
 import { RegisterComponent } from './components/login/register/register.component';
+import { AuthenticationGuard } from './guards/authentication.guard';
 
 const appRoutes: Routes = [
     {
@@ -17,27 +18,34 @@ const appRoutes: Routes = [
     },
     {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'messages',
         component: MessagesComponent
+        ,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'requirements',
-        component: RequirementsComponent
+        component: RequirementsComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'requirements/add',
-        component: RequirementFormComponent
+        component: RequirementFormComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'requirements/edit/:id',
-        component: EditRequirementFormComponent
+        component: EditRequirementFormComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'issues',
-        component: IssuesComponent
+        component: IssuesComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'login',
