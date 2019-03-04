@@ -8,34 +8,36 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit{
+export class MessagesComponent implements OnInit {
   ngOnInit(): void {
     setInterval(() => {
       this.messagesService.getMessages().subscribe((response) => {
         this.groupChats[0].messages = response;
-      })
+      });
     }, 1000);
   }
   title = 'watermelon-app';
 
-  //watermelon server endpoint URL for hello test 
+  // watermelon server endpoint URL for hello test
   readonly TEST_URL = 'https://watermelon-service.herokuapp.com/hello?fbclid=IwAR1_y8TdSRchf7GRUYW9IAFs-GfPnDwn-vHVH2OFUlwypmkqRhBSPWpNgWA';
 
-  //defines hello variable that will take any type
+  // defines hello variable that will take any type
   hello: any;
   userInput: string;
   testDate = new Date();
   user;
   groupChats: any[] = [{
-    firstName: "John", lastName: "Snow", fullName: "John Snow", createdDate: this.testDate,
+    firstName: 'John', lastName: 'Snow', fullName: 'John Snow', createdDate: this.testDate,
     messages: []}];
   selectedGroup = this.groupChats[0];
-  constructor(private http: HttpClient, private messagesService : MessagesService, private userService: UserService) {console.log("testDate is" + this.testDate)
+// tslint:disable-next-line: max-line-length
+  constructor(private http: HttpClient, private messagesService: MessagesService, private userService: UserService) {console.log('testDate is' + this.testDate);
+// tslint:disable-next-line: align
   this.user = this.userService.getUser();
 }
 
-  //method to perform the get request to the watermelon server
-  //expecting hello text response
+  // method to perform the get request to the watermelon server
+  // expecting hello text response
   getHello() {
     this.http.get(this.TEST_URL, {responseType: 'text'}).subscribe((res) => {
       this.hello = res;
@@ -48,7 +50,7 @@ export class MessagesComponent implements OnInit{
     const newMessage = {
       created: date,
       created_by_user: this.user.userName,
-      id: (+new Date()) +"",
+      id: (+new Date()) + '',
       last_modified: date,
       message: this.userInput,
 };
@@ -56,7 +58,7 @@ export class MessagesComponent implements OnInit{
     this.messagesService.creatMessage(newMessage).subscribe((response) => {
       return response;
     });
-    this.userInput = "";
+    this.userInput = '';
   }
   // createChatGroup(){
   //   this.messagesService.createChat();
