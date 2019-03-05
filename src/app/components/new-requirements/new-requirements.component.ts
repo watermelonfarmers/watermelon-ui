@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RequirementsComponent } from '../requirements/requirements.component';
 import { RequirementService } from '../../services/requirement.service';
+import { requirement } from '../requirements/requirement';
 
 @Component({
   selector: 'app-new-requirements',
@@ -15,26 +16,11 @@ export class NewRequirementsComponent extends RequirementsComponent implements O
 
   type: String = 'New Requirements';
   isDataAvailable = false;
-
-  /* displayNewRequirements() {
-    this.newRequirements = this.requirements.map((requirement) => {
-      if((requirement.status == 'NEW') || (requirement.status == 'new')) {
-        return requirement;
-      }
-    })
-  } */
-
-/* 
-  deleteRequirement(id) {
-    let delete_req = confirm('Are you sure you want to delete this requirement?');
-
-    if(delete_req) {
-      this.requirementService.deleteRequirement(id)
-    }
-  } */
+ // @Input() requirement : requirement;
 
   ngOnInit() {
     this.getRequirements();
+
   }
 
 }

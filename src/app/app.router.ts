@@ -43,6 +43,10 @@ const appRoutes: Routes = [
         canActivate: [AuthenticationGuard]
     },
     {
+        path: 'requirements/delete/:id',
+        component: RequirementsComponent
+    },
+    {
         path: 'issues',
         component: IssuesComponent,
         canActivate: [AuthenticationGuard]

@@ -13,7 +13,7 @@ import { NgForm } from "@angular/forms";
 export class EditRequirementFormComponent implements OnInit {
 
   statusOpts: string[] = ['NEW', 'IN PROGRESS', 'ACCEPTED'];
-  assigned_to: string[] = ['User 1', 'User 2', 'User 3', 'User 4', 'User 5'];
+  assigned_to: string[] = ['Unassigned','User 1', 'User 2', 'User 3', 'User 4', 'User 5'];
   submitted = false;
   ngForm: NgForm;
 
@@ -29,33 +29,23 @@ export class EditRequirementFormComponent implements OnInit {
 
 
   ngOnInit() {
-    this.requirementService.readRequirements()
-      .subscribe((data: any) => {
-        data = data.map((requirement) => {
-          return {
-            title: requirement.title,
-            description: requirement.description,
-            id: requirement.id,
-            created_time: requirement.created_time,
-            last_modified_time: requirement.last_modified_time,
-            priority: requirement.priority,
-            status: requirement.status,
-            created_by_user: requirement.created_by_user,
-            due_date: requirement.due_date,
-            comments: requirement.comments,
-            assignedTo: requirement.assigned_to
-          }
-        })
+    this.requirementService.readOneRequirement(this.id)
+    .subscribe((requirement) => {
+      this.requirement = requirement;
 
-        for(let i =0; i< data.length; i++) {
-          if(data[i].id === this.id){
-            this.requirement = data[i];
-          }
-        }
-      }
-    )}
+      this.requirement.created_time = this.requirement.created_time.split("T")[0];
+      this.requirement.last_modified_time = this.requirement.last_modified_time.split("T")[0];
+      this.requirement.due_date = this.requirement.due_date.split("T")[0];
+    })
 
-    editRequirement(form) {
+  }
+
+    editRequirement() {
+      this.requirement.created_time = new Date(this.requirement.created_time).toISOString().substring(0,19);
+      this.requirement.last_modified_time = new Date(this.requirement.last_modified_time).toISOString().substring(0,19);
+      this.requirement.due_date = new Date(this.requirement.due_date).toISOString().substring(0,19);
+      
+      console.log(this.requirement);
 
       this.requirementService.updateRequirement(this.requirement)
         .subscribe(() => {console.log('Requirement Updated')});
