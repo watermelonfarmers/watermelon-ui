@@ -36,6 +36,10 @@ const appRoutes: Routes = [
         component: EditRequirementFormComponent
     },
     {
+        path: 'requirements/delete/:id',
+        component: RequirementsComponent
+    },
+    {
         path: 'issues',
         component: IssuesComponent
     },

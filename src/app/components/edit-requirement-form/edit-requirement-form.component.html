@@ -1,13 +1,26 @@
 <div class="container">
-  <h1>Edit Requirement</h1>
-  <form (ngSubmit)="editRequirement(ngForm)" #editRequirementForm="ngForm">
+  <h1>Requirement Details</h1>
+  <form #editRequirementForm="ngForm">
     <div class="form-group">
       <label for="title">Requirement Title</label>
-      <input type="text" class="form-control" id="title" required [(ngModel)]="requirement.title" name = "title">
+      <input type="text" class="form-control" id="title" #title="ngModel" 
+      required
+      maxlength="30"
+      [(ngModel)]="requirement.title" name = "title">
+      <div class="alert alert-danger" *ngIf="title.touched && !title.valid">
+        <div *ngIf='title.errors.required'>Title is required</div>
+        <div *ngIf='title.errors.maxlength'>Title must be less than 30 characters</div>
+      </div>
     </div>
     <div class="form-group">
         <label for="description">Description</label>
-        <input type="text" class="form-control" id="description" required [(ngModel)]="requirement.description" name = "description">
+        <input type="text" class="form-control" id="description" #description="ngModel"
+        required 
+        maxlength= "500"
+        [(ngModel)]="requirement.description" name = "description">
+        <div class="alert alert-danger" *ngIf="description.touched && !description.valid">
+          <div *ngIf='description.errors.maxlength'>Description must be less than 500 characters</div>
+        </div>
     </div>
     <div class="form-group">
       <label for="status">Status</label>
@@ -18,15 +31,24 @@
       </select>
     </div>
     <div class="form-group">
-      <label for="assigned_to">Assign To</label>
-      <select class="form-control" id="assigned_to"
-            required 
-            [(ngModel)]="requirement.assigned_to" name = "assigned_to">
-        <option *ngFor="let member of assigned_to" [value]="member">{{member}}</option>
+      <label for="assigned_to">Assign To Member</label>
+      <select class="form-control" id="assigned_to" 
+        required
+        [(ngModel)] = "requirement.assigned_to" name="assigned_to" >
+        <option *ngFor="let member of assigned_to" [value] = "member">{{member}}</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="due_date">Due Date</label>
+      <input type="date" class="form-control" id="due_date" #due_date="ngModel"
+        required
+        [(ngModel)] = "requirement.due_date" name="due_date">
+        <div class="alert alert-danger" *ngIf="due_date.touched && !due_date.valid">
+          <div *ngIf='due_date.errors.required'>Due Date is required</div>
+        </div>
+    </div>
     <div class = "button-container">
-        <button type="button" class="btn btn-success" (click) = "editRequirement(ngForm)" routerLink='/requirements'>Edit Requirement</button>
+        <button type="button" [disabled]="editRequirementForm.invalid" class="btn btn-success" (click) = "editRequirement()" routerLink='/requirements'>Edit Requirement</button>
         <button type="button" class="btn btn-danger" routerLink = "/requirements">Go Back</button>      
     </div>
   </form>

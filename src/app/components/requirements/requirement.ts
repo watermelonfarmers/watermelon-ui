@@ -8,7 +8,7 @@ export class requirement {
     status : string;
     created_by_user : string;
     due_date : string;
-    comments : string;
+    comments : [];
     assigned_to : string;
     archived : boolean;
     url : string;
@@ -27,7 +27,6 @@ export class requirement {
         this.status = status;
         this.created_by_user = created_by_user;
         this.due_date = due_date;
-        //this.comments = comments;
         this.assigned_to = assigned_to;
         this.archived = true;
         this.url = 'https://www.pivotaltracker.com/story/show/164053311';
@@ -35,6 +34,6 @@ export class requirement {
     }
 
     public static getDefault():requirement{ 
-        return new requirement(null, "","", "", "", "", "", "", "", "", true , 'https://www.pivotaltracker.com/story/show/164053311');
+        return new requirement(null, "","", "", "", "", "", "", "", "Unassigned", true , 'https://www.pivotaltracker.com/story/show/164053311');
     }
 }

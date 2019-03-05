@@ -1,7 +1,10 @@
 
 <div class= "container-fluid">
   <div class = "row">
-      <app-new-requirements></app-new-requirements>
+      <app-new-requirements> 
+        <!-- *ngFor="let requirement of newRequirements"
+          [requirement] = "requirement" -->
+      </app-new-requirements>
       <app-in-progress-requirements></app-in-progress-requirements>
       <app-accepted-requirements></app-accepted-requirements>    
   </div>

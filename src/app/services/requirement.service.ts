@@ -25,6 +25,11 @@ export class RequirementService {
     return this.http.get(this.requirementsUrl);
   }
 
+  readOneRequirement(id : Number) : Observable<requirement>{
+    let requirementsUrl = this.requirementsUrl + '/' + id;
+    return this.http.get<requirement>(requirementsUrl, httpOptions);
+  }
+
   createRequirement(requirement: requirement) :Observable<requirement> {
     return this.http.post<requirement>(this.requirementsUrl, requirement, httpOptions)
   }
@@ -33,7 +38,8 @@ export class RequirementService {
     return this.http.put<requirement>(this.requirementsUrl, requirement, httpOptions)
   }
 
-  deleteRequirement(requirement : requirement) : Observable<requirement> {
-    return this.http.delete<requirement>(this.requirementsUrl, httpOptions)
+  deleteRequirement(id : Number) : Observable<requirement> {
+    let requirementsUrl = this.requirementsUrl + '/' + id;
+    return this.http.delete<requirement>(requirementsUrl, httpOptions)
   }
 }

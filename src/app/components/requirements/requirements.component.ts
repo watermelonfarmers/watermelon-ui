@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RequirementService } from '../../services/requirement.service';
 import { requirement } from './requirement';
 import { Observable } from 'rxjs';
@@ -10,9 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class RequirementsComponent implements OnInit {
 
-  constructor(private requirementService: RequirementService) {
-    /* this.parseRequirements(); */
-  }
+  constructor(private requirementService: RequirementService) {}
 
   requirements: any;
   newRequirements: requirement [];
@@ -48,46 +46,14 @@ export class RequirementsComponent implements OnInit {
     });
   }
 
-
-  /* newRequirements: requirement [] = [];
-  inProgressRequirements: requirement [] = [];
-  acceptedRequirements: requirement [] = []; */
-
-  /*  parseRequirements() {
-    this.requirementService.readRequirements()
-      .subscribe((data: any) => {
-        data = data.map((requirement) => {
-          return {
-            title: requirement.title,
-            description: requirement.description,
-            id: requirement.id,
-            created_time: requirement.created_time,
-            last_modified_time: requirement.last_modified_time,
-            priority: requirement.priority,
-            status: requirement.status,
-            created_by_user: requirement.created_by_user,
-            due_date: requirement.due_date,
-            comments: requirement.comments,
-            assignedTo: requirement.assigned_to
-          }
-        })
-
-        for(let i =0; i < data.length; i ++) {
-          if((data[i].status === 'NEW') || (data[i].status === 'new')) {
-            this.newRequirements.push(data[i])
-          }
-          if((data[i].status === 'IN PROGRESS') || (data[i].status === 'in progress')) {
-            this.inProgressRequirements.push(data[i])
-          }
-          if((data[i].status === 'ACCEPTED') || (data[i].status === 'accepted')) {
-            this.acceptedRequirements.push(data[i])
-          }
-        }
-      }
-  )} */
-
+  deleteRequirement(id: Number) {
+    if(confirm('Are you sure you want to delete this requirement?')) {
+      console.log(id);
+      this.requirementService.deleteRequirement(id).subscribe()}
+  }
+ 
   ngOnInit() {
-    //this.getRequirements();
+
   }
 
 }
