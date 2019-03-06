@@ -18,7 +18,7 @@ export class UserService {
     }));
   }
   getUser(){
-    return JSON.parse(localStorage.getItem("user"));
+    return JSON.parse(sessionStorage.getItem("user"));
   }
   // loginUser(user){
   //   let headers = new HttpHeaders();
