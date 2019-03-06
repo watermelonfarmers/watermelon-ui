@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MessagesService } from './messages.service';
 import { UserService } from 'src/app/services/user.service';
+import { timer } from "rxjs";
 
 @Component({
   selector: 'app-messages',
@@ -10,15 +11,15 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MessagesComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
-    this.subscription = setInterval(() => {
+    this.subscription = timer(0, 3000).subscribe(() => {
       this.messagesService.getMessages().subscribe((response) => {
         this.groupChats[0].messages = response;
       })
-    }, 5000);
+    });
   }
 
   ngOnDestroy() {
-    clearInterval(this.subscription);
+      this.subscription.unsubscribe();
   }
   title = 'watermelon-app';
   subscription;
