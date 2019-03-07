@@ -1,29 +1,35 @@
 <div class="test"></div>>
 <div class="container">
-        <div class="header">
-<!--             <input type="text" id="new-issue" class="new-issue-input">
- -->            <input id="add-new" type="submit" value="Add Issue" class="btn btn-primary">
-        </div>
-        <div class="list" id="issue-list">
-            <h2>Issues</h2>
-            <h4>
-            	<span>Issue 1: description</span>
-            	<button class="btn-del">Delete</button>
-            	<button class="btn-info">Status</button>
-            </h4>
-        
-            <h4>
-            	<span>Issue 2: description</span>
-            	<button class="btn-del">Delete</button>
-            	<button class="btn-info">Status</button>
-            </h4>
-        
-            <h4>
-            	<span>Issue 3: description</span>
-            	<button class="btn-del">Delete</button>
-            	<button class="btn-info">Status</button>
-            </h4>
-            <br/>
-        </div>
-    </div>
+
+<header>
+  	<section>
+    	<label for="title">Issue</label>
+    	<input type="text"  [(ngModel)]="issue" (keydown)="addIssue($event)" placeholder="add issue" />
+  	</section>
+</header>
+
+<section>
+  	<h2>Issues in progress
+    	<span>{{issueList.length}}</span>
+  	</h2>
+  	<ol class="demo-box">
+    	<li *ngFor="let item of issueList; let key = index" >
+      		<input type="checkbox" (click)="changeIssue(key,true)">
+      		<p>{{item.issue}}</p>
+      		<a (click)="deleteIssue(key,true)">-</a>
+    	</li>
+  	</ol>
+  	<h2>Fixed Issues
+    	<span>{{doneList.length}}</span>
+  	</h2>
+  	<ul>
+    	<li *ngFor="let item of doneList;let key = index">
+      		<input type="checkbox" (click)="changeIssue(key,false)" checked='checked'>
+      		<p>{{item.issue}}</p>
+      		<a (click)="deleteIssue(key,false)">-</a>
+    	</li>
+  	</ul>
+</section>
+
+</div>
 
