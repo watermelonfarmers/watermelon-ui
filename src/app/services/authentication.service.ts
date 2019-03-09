@@ -95,7 +95,7 @@ export class AuthenticationService {
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .set('X-Requested-With', 'XMLHttpRequest');
  
-        this.http.get(this.logoutUrl, {headers:headers, withCredentials:true}).subscribe(response => console.log(response));
+        this.http.get(this.logoutUrl, {headers:headers, withCredentials:true}).subscribe();
         this.router.navigate(['login']);
 
     }
