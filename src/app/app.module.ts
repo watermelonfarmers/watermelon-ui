@@ -3,7 +3,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { WatermelonRouter } from './app.router';
-import { MaterialModule } from "./app.material";
+import { MaterialModule } from "./app-material.module";
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
