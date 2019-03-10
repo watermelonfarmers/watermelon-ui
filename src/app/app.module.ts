@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { WatermelonRouter } from './app.router';
+import { MaterialModule } from "./app-material.module";
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,7 +42,9 @@ import { UserService } from './services/user.service';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    WatermelonRouter
+    WatermelonRouter,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

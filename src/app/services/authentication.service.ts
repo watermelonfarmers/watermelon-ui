@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { User } from "../classes/user";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthenticationService {
     private logoutUrl: string = "https://watermelon-service.herokuapp.com/api/logout";
     private user_id: string = null
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         if (sessionStorage.getItem('auth_token') != null)
         {
             this.user_id = sessionStorage.getItem('user_id');
@@ -61,7 +62,7 @@ export class AuthenticationService {
         .pipe(map(response => response as User))
         .subscribe(
             response => this.processAuthentication(response),
-            error => this.handleError(error)
+            error => this.logout()
         );
     }
 
@@ -94,7 +95,8 @@ export class AuthenticationService {
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .set('X-Requested-With', 'XMLHttpRequest');
  
-        this.http.get(this.logoutUrl, {headers:headers, withCredentials:true}).subscribe(response => console.log(response));
+        this.http.get(this.logoutUrl, {headers:headers, withCredentials:true}).subscribe();
+        this.router.navigate(['login']);
 
     }
 
