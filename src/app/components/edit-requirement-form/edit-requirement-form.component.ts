@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 import { requirement } from '../requirements/requirement'
 import { RequirementService } from '../../services/requirement.service';
-import { switchMap } from 'rxjs/operators';
 import { NgForm } from "@angular/forms";
 
 @Component({
@@ -44,11 +43,9 @@ export class EditRequirementFormComponent implements OnInit {
       this.requirement.created_time = new Date(this.requirement.created_time).toISOString().substring(0,19);
       this.requirement.last_modified_time = new Date(this.requirement.last_modified_time).toISOString().substring(0,19);
       this.requirement.due_date = new Date(this.requirement.due_date).toISOString().substring(0,19);
-      
-      console.log(this.requirement);
 
       this.requirementService.updateRequirement(this.requirement)
-        .subscribe(() => {console.log('Requirement Updated')});
+        .subscribe(() => {this.router.navigate(['/requirements'])});
     };
 
   };

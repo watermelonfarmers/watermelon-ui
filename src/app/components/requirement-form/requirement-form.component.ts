@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RequirementService } from '../../services/requirement.service';
 import { requirement } from '../requirements/requirement'
 import {NgForm} from '@angular/forms';
+import { Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-requirement-form',
@@ -17,7 +19,7 @@ export class RequirementFormComponent implements OnInit {
 
   newRequirement : requirement = requirement.getDefault();
 
-  constructor(private requirementService: RequirementService) {};
+  constructor(private router : Router, private requirementService: RequirementService) {};
 
   addRequirement() {
       this.newRequirement.created_time = new Date().toISOString().substring(0,19);
@@ -27,10 +29,9 @@ export class RequirementFormComponent implements OnInit {
       this.newRequirement.comments = [];
       
        this.requirementService.createRequirement(this.newRequirement)
-      .subscribe(() => {console.log('Requirement Added')});
+      .subscribe(() => {this.router.navigate(['/requirements'])});
     }
-
-  ngOnInit() {
-  }
+    
+  ngOnInit() {}
 
 }

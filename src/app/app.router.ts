@@ -30,7 +30,8 @@ const appRoutes: Routes = [
     {
         path: 'requirements',
         component: RequirementsComponent,
-        canActivate: [AuthenticationGuard]
+        canActivate: [AuthenticationGuard],
+        runGuardsAndResolvers: 'always',
     },
     {
         path: 'requirements/add',
@@ -62,4 +63,4 @@ const appRoutes: Routes = [
 
 ];
 
-export const WatermelonRouter: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const WatermelonRouter: ModuleWithProviders = RouterModule.forRoot(appRoutes, {onSameUrlNavigation:'reload'});
