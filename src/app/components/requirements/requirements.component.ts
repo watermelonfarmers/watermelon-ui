@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RequirementService } from '../../services/requirement.service';
 import { requirement } from './requirement';
-import { Observable } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-requirements',
@@ -10,20 +10,30 @@ import { Observable } from 'rxjs';
 })
 export class RequirementsComponent implements OnInit {
 
-  constructor(private requirementService: RequirementService) {}
+  constructor(private router : Router, private requirementService: RequirementService) {
 
+
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.getRequirements();
+      }
+    });
+  }
+
+  navigationSubscription;
   requirements: any;
   newRequirements: requirement [];
   inProgressRequirements: requirement [];
   acceptedRequirements : requirement [];
   isDataAvailable : boolean = false;
 
-
   getRequirements() : void {
+
     this.requirementService.readRequirements()
     .subscribe(requirements => {
         this.requirements = requirements;
-        
+   
         this.newRequirements = this.requirements.filter((requirement) => {
           if((requirement.status === 'NEW') || (requirement.status === 'new')) {
             return requirement;
@@ -45,15 +55,15 @@ export class RequirementsComponent implements OnInit {
         this.isDataAvailable = true;
     });
   }
-
-  deleteRequirement(id: Number) {
-    if(confirm('Are you sure you want to delete this requirement?')) {
-      console.log(id);
-      this.requirementService.deleteRequirement(id).subscribe()}
-  }
  
   ngOnInit() {
+    this.getRequirements();
+  }
 
+  ngOnDestroy() {
+    if(this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 }

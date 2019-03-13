@@ -21,7 +21,7 @@ export class RequirementService {
 
   requirementsUrl= 'https://watermelon-service.herokuapp.com/api/requirements';
 
-  readRequirements() {
+  readRequirements() : Observable<any>{
     return this.http.get(this.requirementsUrl);
   }
 
