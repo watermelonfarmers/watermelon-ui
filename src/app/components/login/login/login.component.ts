@@ -1,42 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
-import { AuthenticationService } from "../../../services/authentication.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+
+import { AuthenticationService } from "../../../services/authentication.service";
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  user = {
-    name: "",
-    password: "",
-  };
-  loginError: boolean = false;
-  constructor(private userService: UserService, private authenticationService: AuthenticationService, private router: Router) { }
+
+  loginForm: FormGroup = new FormGroup({
+    'username': new FormControl('', [Validators.required]),
+    'password': new FormControl('', [Validators.required])
+  });
+
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router, 
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
 
 
-  login(){
-    if(!this.user.name || !this.user.password){
-      alert("Please enter something.");
-      return;
-    }
-    // this.userService.loginUser(this.user).subscribe((response) => {
-    //   console.log(response);
-    //   localStorage.setItem("user", JSON.stringify(response));
-    // });
-    this.authenticationService.authenticateUser(this.user.name, this.user.password)
-        .subscribe((authenticated: boolean) => {
-            if (authenticated) {
-                this.router.navigate(['']);
-            }
-            else {
-                this.loginError = true;
-            }
-        });
+  login() {
+    if (this.loginForm.invalid) {return}
+    this.authenticationService.authenticateUser(this.loginForm.get("username").value, this.loginForm.get("password").value)
+      .subscribe(response => this.router.navigate(['']),
+      error => this.handleError(error));
+
+  }
+
+  handleError(error: any) {
+
+      if (error.status == "401") {
+        this.openSnackBar("invalid username or password, please try again", "dismiss");
+      }
+      else if (error.status == "0") {
+        this.openSnackBar("service temporarily unavailable", "dismiss");
+      }
+      
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 20000,
+      panelClass: ['red-snackbar'],
+    });
   }
 }
