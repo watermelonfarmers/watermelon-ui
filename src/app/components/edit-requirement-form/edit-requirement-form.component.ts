@@ -26,8 +26,7 @@ export class EditRequirementFormComponent implements OnInit {
       private requirementService: RequirementService
     ) {}
 
-
-  ngOnInit() {
+  getCurrentRequirement() {
     this.requirementService.readOneRequirement(this.id)
     .subscribe((requirement) => {
       this.requirement = requirement;
@@ -36,7 +35,10 @@ export class EditRequirementFormComponent implements OnInit {
       this.requirement.last_modified_time = this.requirement.last_modified_time.split("T")[0];
       this.requirement.due_date = this.requirement.due_date.split("T")[0];
     })
+  }
 
+  ngOnInit() {
+    this.getCurrentRequirement();
   }
 
     editRequirement() {

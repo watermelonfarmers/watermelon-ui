@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
 import { RequirementFormComponent } from './requirement-form.component';
+import { RequirementService } from 'src/app/services/requirement.service';
+import { MockRequirementService } from 'src/app/testing/mockRequirementService';
 
 describe('RequirementFormComponent', () => {
   let component: RequirementFormComponent;
@@ -8,7 +11,12 @@ describe('RequirementFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequirementFormComponent ]
+      imports: [RouterTestingModule, FormsModule],
+      declarations: [ RequirementFormComponent ],
+      providers: [{
+        provide: RequirementService,
+        useClass: MockRequirementService
+      }]
     })
     .compileComponents();
   }));

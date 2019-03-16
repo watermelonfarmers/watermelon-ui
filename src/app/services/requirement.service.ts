@@ -15,14 +15,15 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class RequirementService {
 
   constructor(private http: HttpClient) { }
 
   requirementsUrl= 'https://watermelon-service.herokuapp.com/api/requirements';
 
-  readRequirements() : Observable<any>{
-    return this.http.get(this.requirementsUrl);
+  readRequirements() : Observable<requirement []>{
+    return this.http.get<requirement []>(this.requirementsUrl);
   }
 
   readOneRequirement(id : Number) : Observable<requirement>{
