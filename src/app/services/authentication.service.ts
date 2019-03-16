@@ -31,7 +31,6 @@ export class AuthenticationService {
     }
 
     public setOriginUrl(url:string) {
-        console.log(url);
         this.originUrl = url;
     }
 
@@ -106,10 +105,5 @@ export class AuthenticationService {
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .set('X-Requested-With', 'XMLHttpRequest');
         return headers;
-    }
-
-    private handleError(error: any): Promise<any> {
-        console.error('Error Occured in Authentication Module:', error);
-        return Promise.reject(error.message || error);
     }
 }
