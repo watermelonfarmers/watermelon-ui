@@ -4,12 +4,16 @@
       <form [formGroup]="loginForm" #formDir="ngForm">
           <mat-form-field class="login-container__login-input">
               <input matInput placeholder="Username" formControlName="username" required>
+              <mat-error *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.errors.required">username is required</mat-error>
+              <mat-error *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.errors.maxlength">username too long</mat-error>
           </mat-form-field>
           <mat-form-field class="login-container__login-input">
               <input matInput type="password" placeholder="Password" formControlName="password" required>
+              <mat-error *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.errors.required">password is required</mat-error>
+              <mat-error *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.errors.maxlength">password too long</mat-error>
           </mat-form-field>
           <div class="login-container__login-button">
-              <button mat-raised-button color="primary" [disabled]="!loginForm.valid" (click)="login()">Login</button>
+              <button mat-raised-button color="primary" (click)="login()">Login</button>
           </div>
       </form>
       <div class="login-container__register-link">
