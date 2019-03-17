@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from "rxjs";
+
+import { Register } from '../classes/register';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiurl = "https://watermelon-service.herokuapp.com/api";
-  constructor(private httpclient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  registerUser(user:any){
-    const stringifiedUser = JSON.stringify(user);
-    const options = { headers: { "Content-Type": "application/json", "Accept": "text/plain"}};
+  registerUser(user: Register): Observable<Object>{
+    let headers: HttpHeaders = new HttpHeaders()
+    .set('X-Requested-With', 'XMLHttpRequest')
+    .set('Content-Type', 'application/json');
     const url = this.apiurl + "/users"
-    return this.httpclient.post(url,stringifiedUser, options).pipe(map((response) => {
-      return response;
-    }));
+
+    return this.http.post(url, JSON.stringify(user), { headers: headers });
   }
   getUser(){
     return JSON.parse(sessionStorage.getItem("user"));

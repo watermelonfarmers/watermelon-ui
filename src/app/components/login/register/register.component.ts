@@ -1,42 +1,71 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
+import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+
+import { UserService } from 'src/app/services/user.service';
+import { MatchValidator } from "../../../classes/match.validator";
+import { Register } from "../../../classes/register";
+
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-public user = {
-  "firstName": "",
-  "lastName": "",
-  "password": "",
-  "userName": "",
-};
-  constructor(private userService: UserService, private router: Router) {
+
+  registrationForm: FormGroup = this.formBuilder.group({
+    'username': new FormControl('', [Validators.required, Validators.maxLength(20)]),
+    'firstname': new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    'lastname': new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    'password': new FormControl('', [Validators.required, Validators.maxLength(20)]),
+    'verifypassword': new FormControl('', [Validators.required]),
+  }, {
+      validator: MatchValidator('password', 'verifypassword')
+    });
+
+  constructor(private userService: UserService, 
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar) {
 
    }
 
   ngOnInit() {
   }
 
-
-
   registerUser() {
-    if(!this.user.firstName || !this.user.lastName || !this.user.userName || !this.user.password){
-      alert("Please fill in all the fields.");
+
+    if (this.registrationForm.invalid) {
       return;
     }
-    this.userService.registerUser(this.user).subscribe((response) => {
-      console.log(response);
-    }, (error) => {
-      console.log("The error is ", error);
-      if(error.status === 200 && error.statusText === "OK"){
-        this.router.navigate(["/login"]);
-        return;
-      }
-      alert("Something happened, please try again.")
+
+    let register = new Register();
+    register.userName = this.registrationForm.get("username").value;
+    register.firstName = this.registrationForm.get("firstname").value;
+    register.lastName = this.registrationForm.get("lastname").value;
+    register.password = this.registrationForm.get("password").value;
+
+    this.userService.registerUser(register)
+    .subscribe(result => {this.openSnackBar("account created", "OK", "green-snackbar"); console.log(result)},
+    error => this.handleError(error));
+  }
+
+  handleError(error: any) {
+    console.log(error);
+    if (error.status == "409") {
+      this.openSnackBar("username unavailable", "dismiss", "red-snackbar");
+    }
+    else if (error.status == "0") {
+      this.openSnackBar("service temporarily unavailable", "dismiss", "red-snackbar");
+    }
+  }
+
+  openSnackBar(message: string, action: string, color: string) {
+    this.snackBar.open(message, action, {
+      duration: 600000,
+      panelClass: [color],
     });
   }
 }
