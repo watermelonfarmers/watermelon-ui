@@ -1,25 +1,38 @@
-
-<div class="page-header">
-  <div class="container-fluid">
-    <h1 id="r">
-      REGISTER
-    </h1>
-  </div>
-</div>
-<div class="page-content">
-  <div class="container-fluid">
-    <div class="row" >
-      <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3" id="register">
-          <div class="form-group"><label>First Name</label><input [(ngModel)] = "user.firstName" name = "firstName" type = "text" placeholder="First Name" class="form-control"></div>
-          <div class="form-group"><label>Last name</label><input [(ngModel)] = "user.lastName" name="lastName" type="text" placeholder="Last Name" class="form-control"></div>
-          <div class="form-group"><label>User name</label><input [(ngModel)] = "user.userName" name = "userName" type = "text" placeholder="User name" class="form-control"></div>
-          <div class="form-group"><label>Password</label><input [(ngModel)] = "user.password" name="password" type="password" placeholder="password" class="form-control"></div>
-          <div class="form-group text-center">
-            <button (click) = "registerUser()" type="button"  class="btn btn-accent">Register</button>
+<div class="registration-container">
+  <mat-card>
+      <mat-card-title>Register</mat-card-title>
+      <form [formGroup]="registrationForm" #formDir="ngForm"  (ngSubmit)="registerUser()" >
+          <mat-form-field class="registration-container__registration-input">
+              <input matInput placeholder="Username" formControlName="username" required>
+              <mat-error *ngIf="registrationForm.controls.username.invalid && registrationForm.controls.username.errors.required">username is required</mat-error>
+              <mat-error *ngIf="registrationForm.controls.username.invalid && registrationForm.controls.username.errors.maxlength">username too long</mat-error>
+          </mat-form-field>
+          <mat-form-field class="registration-container__registration-input">
+              <input matInput placeholder="First Name" formControlName="firstname" required>
+              <mat-error *ngIf="registrationForm.controls.firstname.invalid && registrationForm.controls.firstname.errors.required">first name is required</mat-error>
+              <mat-error *ngIf="registrationForm.controls.firstname.invalid && registrationForm.controls.firstname.errors.maxlength">first name too long</mat-error>
+          </mat-form-field>
+          <mat-form-field class="registration-container__registration-input">
+              <input matInput placeholder="Last Name" formControlName="lastname" required>
+              <mat-error *ngIf="registrationForm.controls.lastname.invalid && registrationForm.controls.lastname.errors.required">last name is required</mat-error>
+              <mat-error *ngIf="registrationForm.controls.lastname.invalid && registrationForm.controls.lastname.errors.maxlength">last name too long</mat-error>
+          </mat-form-field>
+          <mat-form-field class="registration-container__registration-input">
+              <input matInput type="password" placeholder="Password" formControlName="password" required>
+              <mat-error *ngIf="registrationForm.controls.password.invalid && registrationForm.controls.password.errors.required">password is required</mat-error>
+              <mat-error *ngIf="registrationForm.controls.password.invalid && registrationForm.controls.password.errors.maxlength">password too long</mat-error>
+          </mat-form-field>
+          <mat-form-field class="registration-container__registration-input">
+              <input matInput type="password" placeholder="Verify Password" formControlName="verifypassword" required>
+              <mat-error *ngIf="registrationForm.controls.verifypassword.invalid && registrationForm.controls.verifypassword.errors.required">password confirmation is required</mat-error>
+              <mat-error *ngIf="registrationForm.controls.verifypassword.invalid && registrationForm.controls.verifypassword.errors.mustmatch">passwords do not match</mat-error>
+          </mat-form-field>
+          <div class="registration-container__registration-button">
+              <button mat-raised-button color="primary">Register</button>
           </div>
-
+      </form>
+      <div class="registration-container__login-link">
+          <span>Already have an account? <a routerLink="/login" routerLinkActive="active">login</a></span>
       </div>
-    </div>
-  </div>
-
+  </mat-card>
 </div>
