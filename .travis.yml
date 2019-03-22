@@ -16,4 +16,4 @@ deploy:
   on:
     branch: master
 notifications:
-  slack: watermelonfarmers:0RTnAqIkXdYu4OXVWKNxXldF
+  slack: watermelonfarmerunion:9tdEp9IpQUuxHsnBe4yj12pV
