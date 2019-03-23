@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
+import {environment} from '../../environments/environment';
 
 import { User } from "../classes/user";
 import { Register } from '../classes/register';
+import { ProfileUpdate } from '../classes/profileupdate';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiurl = "https://watermelon-service.herokuapp.com/api";
+  private url = environment.url + "/users";
   constructor(private http: HttpClient) { }
 
   registerUser(user: Register): Observable<Object>{
     let headers: HttpHeaders = new HttpHeaders()
     .set('X-Requested-With', 'XMLHttpRequest')
     .set('Content-Type', 'application/json');
-    const url = this.apiurl + "/users"
 
-    return this.http.post(url, JSON.stringify(user), { headers: headers });
+    return this.http.post(this.url, JSON.stringify(user), { headers: headers });
   }
 
   getUser(){
@@ -29,9 +30,16 @@ export class UserService {
     let headers: HttpHeaders = new HttpHeaders()
     .set('X-Requested-With', 'XMLHttpRequest')
     .set('Content-Type', 'application/json');
-    const url = this.apiurl + "/users"
 
-    return this.http.get<Array<User>>(url, { headers: headers });
+    return this.http.get<Array<User>>(this.url, { headers: headers });
+  }
+
+  updateUser(user:ProfileUpdate): Observable<User> {
+    let headers: HttpHeaders = new HttpHeaders()
+    .set('X-Requested-With', 'XMLHttpRequest')
+    .set('Content-Type', 'application/json');
+
+    return this.http.put<User>(this.url, JSON.stringify(user), {headers: headers, withCredentials:true} )
   }
   
 }

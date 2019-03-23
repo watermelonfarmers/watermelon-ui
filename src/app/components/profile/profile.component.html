@@ -1,0 +1,35 @@
+<div class="profile-container">
+  <mat-card>
+      <mat-card-title color="primary">{{user.userName}}'s Profile</mat-card-title>
+      <form [formGroup]="profileNameForm" #formDir="ngForm" (ngSubmit)="updateName()">
+          <mat-form-field class="profile-container__profile-input">
+              <input matInput placeholder="First Name" formControlName="firstname" required>
+              <mat-error *ngIf="profileNameForm.controls.firstname.invalid && profileNameForm.controls.firstname.errors.required">first name is required</mat-error>
+              <mat-error *ngIf="profileNameForm.controls.firstname.invalid && profileNameForm.controls.firstname.errors.maxlength">first name too long</mat-error>
+          </mat-form-field>
+          <mat-form-field class="profile-container__profile-input">
+              <input matInput placeholder="Last Name" formControlName="lastname" required>
+              <mat-error *ngIf="profileNameForm.controls.lastname.invalid && profileNameForm.controls.lastname.errors.required">last name is required</mat-error>
+              <mat-error *ngIf="profileNameForm.controls.lastname.invalid && profileNameForm.controls.lastname.errors.maxlength">last name too long</mat-error>
+          </mat-form-field>
+          <div class="profile-container__profile-button">
+            <button mat-raised-button color="primary">Update Name</button>
+        </div>
+      </form>
+      <form [formGroup]="profilePasswordForm" #formDir="ngForm" (ngSubmit)="updatePassword()">
+          <mat-form-field class="profile-container__profile-input">
+            <input matInput type="password" placeholder="Password" formControlName="password" required>
+            <mat-error *ngIf="profilePasswordForm.controls.password.invalid && profilePasswordForm.controls.password.errors.required">password is required</mat-error>
+            <mat-error *ngIf="profilePasswordForm.controls.password.invalid && profilePasswordForm.controls.password.errors.maxlength">password too long</mat-error>
+        </mat-form-field>
+        <mat-form-field class="profile-container__profile-input">
+            <input matInput type="password" placeholder="Verify Password" formControlName="verifypassword" required>
+            <mat-error *ngIf="profilePasswordForm.controls.verifypassword.invalid && profilePasswordForm.controls.verifypassword.errors.required">password confirmation is required</mat-error>
+            <mat-error *ngIf="profilePasswordForm.controls.verifypassword.invalid && profilePasswordForm.controls.verifypassword.errors.mustmatch">passwords do not match</mat-error>
+        </mat-form-field>
+          <div class="profile-container__profile-button">
+              <button mat-raised-button color="primary">Update Password</button>
+          </div>
+      </form>
+  </mat-card>
+</div>

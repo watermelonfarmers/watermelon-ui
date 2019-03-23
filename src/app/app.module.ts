@@ -21,6 +21,7 @@ import { EditRequirementFormComponent } from './components/edit-requirement-form
 import { LoginComponent } from "./components/login/login/login.component";
 import { RegisterComponent } from "./components/login/register/register.component";
 import { UserService } from './services/user.service';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UserService } from './services/user.service';
     RequirementFormComponent,
     EditRequirementFormComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

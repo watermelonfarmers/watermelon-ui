@@ -4,6 +4,7 @@ import { requirement } from '../components/requirements/requirement';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 const httpOptions = {
   headers : new HttpHeaders({
@@ -20,7 +21,7 @@ export class RequirementService {
 
   constructor(private http: HttpClient) { }
 
-  requirementsUrl= 'https://watermelon-service.herokuapp.com/api/requirements';
+  requirementsUrl= environment.url + "/requirements";
 
   readRequirements() : Observable<requirement []>{
     return this.http.get<requirement []>(this.requirementsUrl);

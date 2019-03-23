@@ -2,6 +2,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { ProfileComponent } from "./components/profile/profile.component";
 import { RequirementsComponent } from './components/requirements/requirements.component';
 import { IssuesComponent } from "./components/issues/issues.component";
 import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
@@ -59,6 +60,10 @@ const appRoutes: Routes = [
     {
         path: 'register',
         component: RegisterComponent
+    },
+    {
+        path: 'profile',
+        component: ProfileComponent
     }
 
 ];
