@@ -1,49 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from "rxjs";
+
+import { User } from "../classes/user";
+import { Register } from '../classes/register';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiurl = "https://watermelon-service.herokuapp.com/api";
-  constructor(private httpclient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  registerUser(user:any){
-    const stringifiedUser = JSON.stringify(user);
-    const options = { headers: { "Content-Type": "application/json", "Accept": "text/plain"}};
+  registerUser(user: Register): Observable<Object>{
+    let headers: HttpHeaders = new HttpHeaders()
+    .set('X-Requested-With', 'XMLHttpRequest')
+    .set('Content-Type', 'application/json');
     const url = this.apiurl + "/users"
-    return this.httpclient.post(url,stringifiedUser, options).pipe(map((response) => {
-      return response;
-    }));
+
+    return this.http.post(url, JSON.stringify(user), { headers: headers });
   }
+
   getUser(){
-    return JSON.parse(localStorage.getItem("user"));
+    return JSON.parse(sessionStorage.getItem("user"));
   }
-  loginUser(user){
-    let headers = new HttpHeaders();
-    headers.append("Authorization", "Basic " + btoa(user.name + ":" + user.password));
-    headers.append("Content-Type", "application/X-www-form-urlencoded");
-    headers.append("cache-control", "no cache");
-    const url = this.apiurl + "/login";
-    const httpparams = new HttpParams();
-    httpparams.append("name", user.name);
-    httpparams.append("password", user.password);
-    return this.httpclient.get(url, {headers: headers, params: httpparams, withCredentials: true}).pipe(map((response) => {
-      return response;
-    }));
+  
+  getAllUsers(): Observable<Array<User>> {
+    let headers: HttpHeaders = new HttpHeaders()
+    .set('X-Requested-With', 'XMLHttpRequest')
+    .set('Content-Type', 'application/json');
+    const url = this.apiurl + "/users"
+
+    return this.http.get<Array<User>>(url, { headers: headers });
   }
-  logout(){
-    const user = JSON.parse(localStorage.getItem("user"));
-    let headers = new HttpHeaders();
-    headers.append("Authorization", "Basic " + btoa(user.userName + ":" + user.password));
-    headers.append("Content-Type", "application/X-www-form-urlencoded");
-    headers.append("cache-control", "no cache");
-    const httpparams = new HttpParams();
-    httpparams.append("name", user.userName);
-    httpparams.append("password", user.password);
-    return this.httpclient.get(this.apiurl + "/logout", {headers: headers, withCredentials: true, params: httpparams}).pipe(map((response) =>{
-      return response;
-    }));
-  }
+  
 }

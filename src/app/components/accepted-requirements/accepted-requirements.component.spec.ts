@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { RequirementService } from '../../services/requirement.service';
 import { AcceptedRequirementsComponent } from './accepted-requirements.component';
+import { MockRequirementService } from '../../testing/mockRequirementService';
 
 describe('AcceptedRequirementsComponent', () => {
   let component: AcceptedRequirementsComponent;
@@ -8,7 +10,12 @@ describe('AcceptedRequirementsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AcceptedRequirementsComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ AcceptedRequirementsComponent],
+       providers: [{
+         provide: RequirementService,
+         useClass : MockRequirementService
+        }]
     })
     .compileComponents();
   }));

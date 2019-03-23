@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RequirementService } from '../../services/requirement.service';
 import { requirement } from './requirement';
-import { Observable } from 'rxjs';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-requirements',
@@ -10,22 +10,30 @@ import { Observable } from 'rxjs';
 })
 export class RequirementsComponent implements OnInit {
 
-  constructor(private requirementService: RequirementService) {
-    /* this.parseRequirements(); */
+  constructor(private router : Router, private requirementService: RequirementService) {
+
+
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.getRequirements();
+      }
+    });
   }
 
+  navigationSubscription;
   requirements: any;
   newRequirements: requirement [];
   inProgressRequirements: requirement [];
   acceptedRequirements : requirement [];
   isDataAvailable : boolean = false;
 
-
   getRequirements() : void {
+
     this.requirementService.readRequirements()
     .subscribe(requirements => {
         this.requirements = requirements;
-        
+   
         this.newRequirements = this.requirements.filter((requirement) => {
           if((requirement.status === 'NEW') || (requirement.status === 'new')) {
             return requirement;
@@ -47,47 +55,15 @@ export class RequirementsComponent implements OnInit {
         this.isDataAvailable = true;
     });
   }
-
-
-  /* newRequirements: requirement [] = [];
-  inProgressRequirements: requirement [] = [];
-  acceptedRequirements: requirement [] = []; */
-
-  /*  parseRequirements() {
-    this.requirementService.readRequirements()
-      .subscribe((data: any) => {
-        data = data.map((requirement) => {
-          return {
-            title: requirement.title,
-            description: requirement.description,
-            id: requirement.id,
-            created_time: requirement.created_time,
-            last_modified_time: requirement.last_modified_time,
-            priority: requirement.priority,
-            status: requirement.status,
-            created_by_user: requirement.created_by_user,
-            due_date: requirement.due_date,
-            comments: requirement.comments,
-            assignedTo: requirement.assigned_to
-          }
-        })
-
-        for(let i =0; i < data.length; i ++) {
-          if((data[i].status === 'NEW') || (data[i].status === 'new')) {
-            this.newRequirements.push(data[i])
-          }
-          if((data[i].status === 'IN PROGRESS') || (data[i].status === 'in progress')) {
-            this.inProgressRequirements.push(data[i])
-          }
-          if((data[i].status === 'ACCEPTED') || (data[i].status === 'accepted')) {
-            this.acceptedRequirements.push(data[i])
-          }
-        }
-      }
-  )} */
-
+ 
   ngOnInit() {
-    //this.getRequirements();
+    this.getRequirements();
+  }
+
+  ngOnDestroy() {
+    if(this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 }
