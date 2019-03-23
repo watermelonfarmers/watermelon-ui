@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MessagesService } from './messages.service';
 import { UserService } from 'src/app/services/user.service';
@@ -9,12 +9,33 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
+  @ViewChild('messages') messagesWrapper: ElementRef;
   ngOnInit(): void {
+    this.getMessages();
+    this.scrollToBottom();
     this.subscription = setInterval(() => {
-      this.messagesService.getMessages().subscribe((response) => {
-        this.groupChats[0].messages = response;
-      });
-    }, 5000);
+      this.getMessages();
+    }, 2500);
+    console.log(this.user);
+    console.log(this.messagesWrapper);
+  }
+
+  scrollToBottom() {
+    console.log('Scrolling to Bottom');
+    setTimeout(() => {
+      this.messagesWrapper.nativeElement.scrollTop = this.messagesWrapper.nativeElement.scrollHeight;
+    }, 100);
+  }
+
+  getMessages() {
+    this.messagesService.getMessages().subscribe((response) => {
+      console.log(response);
+      this.groupChats[0].messages = response;
+      const messagesLength = this.groupChats[0].messages.length;
+      // if (this.groupChats[0].messages[messagesLength - 1].created_by_user !== this.user.userName) {
+      //   this.scrollToBottom();
+      // }
+    });
   }
 
 // tslint:disable-next-line: use-life-cycle-interface
@@ -24,7 +45,7 @@ export class MessagesComponent implements OnInit {
 // tslint:disable-next-line: member-ordering
   title = 'watermelon-app';
 // tslint:disable-next-line: member-ordering
-  subscription: NodeJS.Timer;
+  subscription;
 
   // watermelon server endpoint URL for hello test
 // tslint:disable-next-line: member-ordering
@@ -34,7 +55,7 @@ export class MessagesComponent implements OnInit {
 // tslint:disable-next-line: member-ordering
   hello: any;
 // tslint:disable-next-line: member-ordering
-  userInput: string;
+  userInput = '';
 // tslint:disable-next-line: member-ordering
   testDate = new Date();
 // tslint:disable-next-line: member-ordering
@@ -62,6 +83,9 @@ export class MessagesComponent implements OnInit {
   }
   send_message() {
     console.log(this.userInput);
+    if (!this.userInput) {
+      return;
+    }
     const date = new Date();
     const newMessage = {
       created: date,
@@ -75,6 +99,7 @@ export class MessagesComponent implements OnInit {
       return response;
     });
     this.userInput = '';
+    this.scrollToBottom();
   }
   createChatGroup() {
     // this.messagesService.createChat();

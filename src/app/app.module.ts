@@ -21,6 +21,7 @@ import { EditRequirementFormComponent } from './components/edit-requirement-form
 import { LoginComponent } from "./components/login/login/login.component";
 import { RegisterComponent } from "./components/login/register/register.component";
 import { UserService } from './services/user.service';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UserService } from './services/user.service';
     RequirementFormComponent,
     EditRequirementFormComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    DateFormatPipe
   ],
   imports: [
     BrowserModule,

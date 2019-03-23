@@ -7,21 +7,21 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class MessagesService {
 
-  private url = "https://watermelon-service.herokuapp.com/api";
-  constructor(private httpClient: HttpClient) { 
+  private url = 'https://watermelon-service.herokuapp.com/api';
+  constructor(private httpClient: HttpClient) {
 
   }
 
-  creatMessage(message){
+  creatMessage(message) {
     const stringifyMessage = JSON.stringify(message);
-    return this.httpClient.post(this.url + "/messages", message).pipe(map((response)=> {
+    return this.httpClient.post(this.url + '/messages', message).pipe(map((response) => {
       return response;
-    }))
+    }));
   }
 
-  getMessages(){
-    return this.httpClient.get(this.url + "/messages").pipe(map((response) => {
+  getMessages() {
+    return this.httpClient.get(this.url + '/messages').pipe(map((response) => {
       return response;
-    }))
+    }));
   }
 }
