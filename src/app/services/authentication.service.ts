@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
@@ -13,14 +14,14 @@ export class AuthenticationService {
 
   private authenticated: boolean = false;
     private originUrl: string = null;
-    private loginUrl: string = "https://watermelon-service.herokuapp.com/api/login";
-    private logoutUrl: string = "https://watermelon-service.herokuapp.com/api/logout";
-    private user_id: string = null
+    private loginUrl: string = environment.url + "/login";
+    private logoutUrl: string = environment.url + "/logout";
+    private user_name: string = null;
 
     constructor(private http: HttpClient, private router: Router) {
         if (sessionStorage.getItem('auth_token') != null)
         {
-            this.user_id = sessionStorage.getItem('user_id');
+            this.user_name = sessionStorage.getItem('user_name');
             this.authenticated = true;
             this.checkAuthentication();
         }
@@ -35,7 +36,7 @@ export class AuthenticationService {
     }
 
     public getUserIdentifier(): string {
-        return this.user_id;
+        return this.user_name;
     }
 
     public authenticateUser(username:string, password:string): Observable<boolean> {
@@ -70,8 +71,8 @@ export class AuthenticationService {
         if (user)
         {
             sessionStorage.setItem('auth_token', Math.random().toString(36).slice(2));
-            this.user_id = user.userName.toString()
-            sessionStorage.setItem('user_id', this.user_id);
+            this.user_name = user.userName.toString()
+            sessionStorage.setItem('user_name', this.user_name);
             this.authenticated = true;
             sessionStorage.setItem("user", JSON.stringify(user));
         }
@@ -84,9 +85,9 @@ export class AuthenticationService {
 
     public logout() {
         this.authenticated = false;
-        this.user_id = null;
+        this.user_name = null;
         sessionStorage.removeItem('auth_token');
-        sessionStorage.removeItem('user_id');
+        sessionStorage.removeItem('user_name');
         sessionStorage.removeItem('user');
 
         let headers = new HttpHeaders();
