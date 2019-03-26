@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';  //NgModel lives here
+import { IssueService } from 'src/app/services/issue.service';
+import { Issue } from 'src/app/classes/issue';
+import { IssueRequest } from 'src/app/classes/issue-request';
 
 @NgModule({
   
@@ -24,7 +27,7 @@ export class IssuesComponent implements OnInit {
 	public issueList = [];
 	public doneList = [];
 
-  	constructor() {  }
+  	constructor(private issueService: IssueService) {  }
 
   	ngOnInit() {
 
@@ -66,6 +69,39 @@ export class IssuesComponent implements OnInit {
       this.doneList.splice(index, 1);
     }
 
-  }
+	}
+	
+	// testGetIssues() {
+
+	// 	this.issueService.getIssues().subscribe(results => console.log(results));		
+	// }
+
+	// testGetOneIssue() {
+
+	// 	this.issueService.getIssueById(1).subscribe(results => console.log(results));		
+	// }
+
+	// testCreateIssue() {
+	// 	let issue: IssueRequest = new IssueRequest();
+	// 	issue.title = "something";
+	// 	issue.description = "some description"
+	// 	issue.status = "IN PROGRESS"
+	// 	issue.priority = 10;
+	// 	issue.createdByUserId = 1;
+
+	// 	this.issueService.createIssue(issue).subscribe();
+	// }
+
+	// testUpdateIssue() {
+	// 	let issue: IssueRequest = new IssueRequest();
+	// 	issue.status = "COMPLETE"
+	// 	issue.assignedUserId = 1;
+
+	// 	this.issueService.updateIssue(issue, 1).subscribe();
+	// }
+
+	// testDeleteIssue() {
+	// 	this.issueService.deleteIssue(2).subscribe();
+	// }
   
 }
