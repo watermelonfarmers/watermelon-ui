@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { requirement } from '../components/requirements/requirement';
+import { Requirement } from '../classes/requirement';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
+import { User } from '../classes/user';
 import {environment} from '../../environments/environment';
 
 const httpOptions = {
@@ -21,27 +22,33 @@ export class RequirementService {
 
   constructor(private http: HttpClient) { }
 
+  usersUrl = environment.url + "/users";
   requirementsUrl= environment.url + "/requirements";
 
-  readRequirements() : Observable<requirement []>{
-    return this.http.get<requirement []>(this.requirementsUrl);
+  readRequirements() : Observable<Requirement []>{
+    return this.http.get<Requirement []>(this.requirementsUrl);
   }
 
-  readOneRequirement(id : Number) : Observable<requirement>{
+  readOneRequirement(id : Number) : Observable<Requirement>{
     let requirementsUrl = this.requirementsUrl + '/' + id;
-    return this.http.get<requirement>(requirementsUrl, httpOptions);
+    return this.http.get<Requirement>(requirementsUrl, httpOptions);
   }
 
-  createRequirement(requirement: requirement) :Observable<requirement> {
-    return this.http.post<requirement>(this.requirementsUrl, requirement, httpOptions)
+  createRequirement(requirement: Requirement) :Observable<Requirement> {
+    return this.http.post<Requirement>(this.requirementsUrl, requirement, httpOptions)
   }
 
-  updateRequirement(requirement : requirement) : Observable<requirement> {
-    return this.http.put<requirement>(this.requirementsUrl, requirement, httpOptions)
+  updateRequirement(requirement : Requirement) : Observable<Requirement> {
+    let requirementsUrl = this.requirementsUrl + '/' + requirement.id;
+    return this.http.put<Requirement>(requirementsUrl, requirement, httpOptions)
   }
 
-  deleteRequirement(id : Number) : Observable<requirement> {
+  deleteRequirement(id : Number) : Observable<Requirement> {
     let requirementsUrl = this.requirementsUrl + '/' + id;
-    return this.http.delete<requirement>(requirementsUrl, httpOptions)
+    return this.http.delete<Requirement>(requirementsUrl, httpOptions)
+  }
+
+  getUsers() : Observable<User []>{
+    return this.http.get<User []>(this.usersUrl);
   }
 }

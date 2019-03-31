@@ -1,14 +1,17 @@
-
 <div class= "container-fluid">
   <div class = "row">
       <app-new-requirements 
-        [newRequirements] = "newRequirements">
+        [newRequirements] = "newRequirements"
+        [users]="users">
         </app-new-requirements>
       <app-in-progress-requirements 
-        [inProgressRequirements] = 'inProgressRequirements'>
+        [inProgressRequirements] = 'inProgressRequirements'
+        [users]="users">
       </app-in-progress-requirements>
       <app-accepted-requirements 
-        [acceptedRequirements] = 'acceptedRequirements'>
+        [acceptedRequirements] = 'acceptedRequirements'
+        [users]="users">
         </app-accepted-requirements>    
   </div>
 </div>
+
