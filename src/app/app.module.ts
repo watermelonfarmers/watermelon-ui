@@ -23,6 +23,7 @@ import { RegisterComponent } from "./components/login/register/register.componen
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/profile/profile.component';
 import { IssueDialogComponent } from './components/issues/issue-dialog/issue-dialog.component';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { IssueDialogComponent } from './components/issues/issue-dialog/issue-dia
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    IssueDialogComponent
+    IssueDialogComponent,
+    DateFormatPipe
   ],
   imports: [
     BrowserModule,

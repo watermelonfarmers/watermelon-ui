@@ -13,16 +13,16 @@ export class MessagesService {
 
   }
 
-  creatMessage(message){
+  creatMessage(message) {
     const stringifyMessage = JSON.stringify(message);
     return this.httpClient.post(this.url, message).pipe(map((response)=> {
       return response;
-    }))
+    }));
   }
 
   getMessages(){
     return this.httpClient.get(this.url).pipe(map((response) => {
       return response;
-    }))
+    }));
   }
 }
