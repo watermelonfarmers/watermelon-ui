@@ -1,8 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatDialogModule } from "@angular/material";
 
 import { IssuesComponent } from './issues.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('IssuesComponent', () => {
@@ -13,7 +15,16 @@ describe('IssuesComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatListModule,
+        MatDialogModule
       ],
       declarations: [ IssuesComponent ]
     })
