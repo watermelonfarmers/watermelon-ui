@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
     register.password = this.registrationForm.get("password").value;
 
     this.userService.registerUser(register)
-    .subscribe(result => {this.openSnackBar("account created", "OK", "green-snackbar"); console.log(result)},
+    .subscribe(result => {this.openSnackBar("account created", "OK", "green-snackbar");},
     error => this.handleError(error));
   }
 

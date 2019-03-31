@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from "@angular/forms";
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MessagesComponent } from './messages.component';
+import { DateFormatPipe } from 'src/app/pipes/date-format.pipe';
 
 describe('MessagesComponent', () => {
   let component: MessagesComponent;
@@ -14,7 +15,7 @@ describe('MessagesComponent', () => {
         FormsModule,
         HttpClientTestingModule
       ],
-      declarations: [ MessagesComponent ]
+      declarations: [ MessagesComponent, DateFormatPipe ]
     })
     .compileComponents();
   }));
