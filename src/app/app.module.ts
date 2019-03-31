@@ -22,6 +22,7 @@ import { LoginComponent } from "./components/login/login/login.component";
 import { RegisterComponent } from "./components/login/register/register.component";
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/profile/profile.component';
+import { IssueDialogComponent } from './components/issues/issue-dialog/issue-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     EditRequirementFormComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    IssueDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +51,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     BrowserAnimationsModule,
     MaterialModule
   ],
+  entryComponents: [IssuesComponent, IssueDialogComponent],
   providers: [UserService],
   bootstrap: [AppComponent]
 })

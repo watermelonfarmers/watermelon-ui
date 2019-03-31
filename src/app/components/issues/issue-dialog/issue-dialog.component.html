@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{this.dialogTitle}}</h1>
+<div mat-dialog-content class="dialog">
+  <mat-form-field>
+    <input matInput placeholder="Title" [(ngModel)]="issue.title">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Description" [(ngModel)]="issue.description"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="issue.status" name="status" [disabled]="data.option === 'CREATE'">
+      <mat-option *ngFor="let s of status" [value]="s.value">{{s.viewValue}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <mat-select [(ngModel)]="issue.priority" name="priority">
+      <mat-option *ngFor="let p of priorities" [value]="p.value">{{p.viewValue}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Assign User</mat-label>
+    <mat-select [compareWith]="compareUser" [(ngModel)]="issue.assignedUser" name="user">
+      <mat-option *ngFor="let user of users" [value]="user">{{user.userName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="issue" cdkFocusInitial>{{buttonTitle}}</button>
+</div>
