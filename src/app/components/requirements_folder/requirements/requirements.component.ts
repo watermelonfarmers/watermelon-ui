@@ -1,16 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RequirementService } from '../../services/requirement.service';
-import { requirement } from './requirement';
+import { RequirementService } from '../../../services/requirement.service';
+import { Requirement } from '../../../classes/requirement';
 import { Router, NavigationEnd } from '@angular/router';
+import { User } from '../../../classes/user';
+import { MatDialog } from '@angular/material';
+import { RequirementFormComponent } from '../requirement-form/requirement-form.component';
 
 @Component({
   selector: 'app-requirements',
   templateUrl: './requirements.component.html',
   styleUrls: ['./requirements.component.css']
 })
+
 export class RequirementsComponent implements OnInit {
 
-  constructor(private router : Router, private requirementService: RequirementService) {
+  constructor(private router : Router, private requirementService: RequirementService, public dialog: MatDialog) {
 
 
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
@@ -23,15 +27,16 @@ export class RequirementsComponent implements OnInit {
 
   navigationSubscription;
   requirements: any;
-  newRequirements: requirement [];
-  inProgressRequirements: requirement [];
-  acceptedRequirements : requirement [];
-  isDataAvailable : boolean = false;
+  newRequirements: Requirement [];
+  inProgressRequirements: Requirement [];
+  acceptedRequirements : Requirement [];
+  users: User [];
 
   getRequirements() : void {
 
     this.requirementService.readRequirements()
     .subscribe(requirements => {
+
         this.requirements = requirements;
    
         this.newRequirements = this.requirements.filter((requirement) => {
@@ -51,13 +56,19 @@ export class RequirementsComponent implements OnInit {
             return requirement;
           }
         });
-
-        this.isDataAvailable = true;
     });
   }
- 
+
+  getUsers() {
+    this.requirementService.getUsers()
+    .subscribe(users => {
+      this.users = users;
+    })
+  }
+
   ngOnInit() {
     this.getRequirements();
+    this.getUsers();
   }
 
   ngOnDestroy() {

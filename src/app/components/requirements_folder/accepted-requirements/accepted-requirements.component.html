@@ -1,0 +1,22 @@
+<div class = "col-md-4">
+  <div class='table-responsive'>
+  <table class="table table-hover table-bordered">
+    <tr class="requirement_type">
+      <th colspan="4">{{type}}</th>
+    </tr>
+    <tr>
+      <th>Requirement</th>
+      <th>Assigned To</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let requirement of acceptedRequirements">
+      <td>{{requirement.title}}</td>
+      <td>{{requirement.assignedToUser.firstName + ' ' + requirement.assignedToUser.lastName}}</td>
+      <td><button mat-icon-button  (click)="openDetailDialog(requirement.id)"><mat-icon>info</mat-icon></button></td>
+      <td><button mat-icon-button color="warn" (click) = deleteRequirement(requirement.id)><mat-icon>delete</mat-icon></button></td>
+      <!-- <td><input type="button" value="Details" class="btn btn-primary" routerLink='/requirements/edit/{{requirement.id}}'></td>
+      <td><input type="button" value="Delete" class="btn btn-danger" (click) = deleteRequirement(requirement.id) ></td>-->    </tr>
+  </table>
+</div>
+</div>

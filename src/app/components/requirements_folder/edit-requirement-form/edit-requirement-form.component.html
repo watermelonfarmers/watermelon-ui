@@ -1,0 +1,115 @@
+<div *ngIf="dataAvailable" class='container'>
+    <mat-card>
+      <mat-card-title color='primary'>Edit Requirement</mat-card-title>
+      <form [formGroup]='editRequirementForm' #formDir="ngForm">
+        <mat-form-field class="container__title">
+          <input matInput placeholder="Title" formControlName="title" [(ngModel)]="requirement.title" required>
+          <mat-error *ngIf='editRequirementForm.controls.title.errors?.required'>Title is required</mat-error>
+          <mat-error *ngIf='editRequirementForm.controls.title.errors?.maxlength'>Title is too long</mat-error>
+        </mat-form-field>
+        <mat-form-field class="container__description">
+            <textarea matInput 
+            placeholder="Description"
+            cdkTextareaAutosize 
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="5"
+            formControlName="description"
+            [(ngModel)]="requirement.description"
+            required></textarea>
+          <mat-error *ngIf='editRequirementForm.controls.description.errors?.required'>Description is required</mat-error>
+          <mat-error *ngIf='editRequirementForm.controls.description.errors?.maxlength'>Description is too long</mat-error>
+        </mat-form-field>
+        <mat-form-field class="container__status">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" name="status" [(ngModel)]="requirement.status">
+              <mat-option *ngFor="let status of statusOpts" [value]="status">
+                {{status}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="container__priority">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority" name="priority" [(ngModel)]="requirement.priority">
+              <mat-option *ngFor="let urgency of priority" [value]="urgency">
+                {{urgency}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="container__assignedToUser">
+          <mat-label>Assigned To</mat-label>
+          <mat-select formControlName="assignedToUser" name="assignedToUser" [(ngModel)]="requirement.assignedToUser">
+            <mat-option *ngFor="let user of users" [value]="user">
+              {{user.firstName + ' ' + user.lastName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="container__dueDate">
+          <input matInput [matDatepicker]="dueDate" placeholder="Choose a due date"
+           formControlName="dueDate" [min]="currentDate" [(ngModel)]="requirement.dueDate">
+          <mat-datepicker-toggle [for]="dueDate"></mat-datepicker-toggle>
+          <mat-datepicker #dueDate></mat-datepicker>
+        </mat-form-field>
+        <div class="container__edit-requirement">
+            <button mat-raised-button color="primary" (click)="editRequirement()">Edit Requirement</button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+
+
+  <div *ngIf="!dataAvailable" class='container'>
+      <mat-card>
+        <mat-card-title color='primary'>Edit Requirement</mat-card-title>
+        <form>
+          <mat-form-field class="container__title">
+            <input matInput placeholder="Title" required>
+            <mat-error *ngIf='editRequirementForm.controls.title.errors?.required'>Title is required</mat-error>
+            <mat-error *ngIf='editRequirementForm.controls.title.errors?.maxlength'>Title is too long</mat-error>
+          </mat-form-field>
+          <mat-form-field class="container__description">
+              <textarea matInput 
+              placeholder="Description"
+              cdkTextareaAutosize 
+              cdkAutosizeMinRows="2"
+              cdkAutosizeMaxRows="5"
+              required></textarea>
+            <mat-error *ngIf='editRequirementForm.controls.description.errors?.required'>Description is required</mat-error>
+            <mat-error *ngIf='editRequirementForm.controls.description.errors?.maxlength'>Description is too long</mat-error>
+          </mat-form-field>
+          <mat-form-field class="container__status">
+              <mat-label>Status</mat-label>
+              <mat-select name="status">
+                <mat-option *ngFor="let status of statusOpts" [value]="status">
+                  {{status}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field class="container__priority">
+              <mat-label>Priority (1 = Low; 10 = High)</mat-label>
+              <mat-select name="priority">
+                <mat-option *ngFor="let number of priority" [value]="priority">
+                  {{number}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field class="container__assignedToUser">
+            <mat-label>Assigned To</mat-label>
+            <mat-select name="assignedToUser">
+              <mat-option *ngFor="let user of users" [value]="user">
+                {{user.firstName + ' ' + user.lastName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="container__dueDate">
+            <input matInput [matDatepicker]="dueDate" placeholder="Choose a due date"
+             [min]="currentDate">
+            <mat-datepicker-toggle [for]="dueDate"></mat-datepicker-toggle>
+            <mat-datepicker #dueDate></mat-datepicker>
+          </mat-form-field>
+          <div class="container__edit-requirement">
+              <button mat-raised-button color="primary" (click)="editRequirement()">Edit Requirement</button>
+              <button mat-raised-button color="warn" routerLink = "/requirements">Go Back</button>      
+          </div>
+        </form>
+      </mat-card>
+    </div>
