@@ -22,6 +22,7 @@ import { LoginComponent } from "./components/login/login/login.component";
 import { RegisterComponent } from "./components/login/register/register.component";
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     EditRequirementFormComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    DateFormatPipe
   ],
   imports: [
     BrowserModule,
