@@ -1,5 +1,4 @@
 <div class="container">
-    <h3 class=" text-center">Messaging</h3>
     <div class="messaging">
           <div class="inbox_msg">
             <div class="inbox_people">
@@ -18,7 +17,7 @@
               <div class="inbox_chat">
                 <div *ngFor="let eachGroup of groupChats" (click)="changeSelectedGroup(eachGroup)" [ngClass]="{'active_chat': selectedGroup === eachGroup}" class="chat_list">
                   <div class="chat_people">
-                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                    <div class="chat_img"> <img src="./assets/user-profile.png" alt="user image"> </div>
                     <div class="chat_ib">
                       <h5>{{eachGroup.fullName}} <span class="chat_date">{{eachGroup.createdDate}}</span></h5>
                       <p>Test, this is where the most recent message will appear.</p>
@@ -30,14 +29,14 @@
             <div class="mesgs">
               <div #messages class="msg_history">
                 <ng-container *ngFor="let eachMessage of selectedGroup.messages">
-                    <div *ngIf="eachMessage.created_by_user !== user.userName; else outgoingMessage" class="incoming_msg">
+                    <div *ngIf="eachMessage.user && (eachMessage.user.userName !== user.userName); else outgoingMessage" class="incoming_msg">
                       <div class="incoming_msg_img">
-                        <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+                        <img src="./assets/user-profile.png" alt="user image">
                       </div>
                       <div class="received_msg">
                         <div class="received_withd_msg">
                           <p>{{eachMessage.message}}</p>
-                          <span class="time_date">{{eachMessage.created_by_user + ' ' + (eachMessage.created | dateFormat)}}</span>
+                          <span class="time_date">{{eachMessage.user.userName + ' ' + (eachMessage.created | dateFormat)}}</span>
                         </div>
                       </div>
                     </div>
