@@ -4,6 +4,10 @@ import { NgModule } from '@angular/core';
 
 import { WatermelonRouter } from './app.router';
 import { MaterialModule } from "./app-material.module";
+import { MatSelectModule, MatNativeDateModule, MatDialogModule } from '@angular/material';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material'  
+import { MatIconModule } from "@angular/material/icon";
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,12 +16,12 @@ import { HomeComponent } from './components/home/home.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { MessagesComponent } from './components/messages/messages.component';
-import { RequirementsComponent } from './components/requirements/requirements.component';
-import { NewRequirementsComponent } from './components/new-requirements/new-requirements.component';
-import { InProgressRequirementsComponent } from './components/in-progress-requirements/in-progress-requirements.component';
-import { AcceptedRequirementsComponent } from './components/accepted-requirements/accepted-requirements.component';
-import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
-import { EditRequirementFormComponent } from './components/edit-requirement-form/edit-requirement-form.component';
+import { RequirementsComponent } from './components/requirements_folder/requirements/requirements.component';
+import { NewRequirementsComponent } from './components/requirements_folder/new-requirements/new-requirements.component';
+import { InProgressRequirementsComponent } from './components/requirements_folder/in-progress-requirements/in-progress-requirements.component';
+import { AcceptedRequirementsComponent } from './components/requirements_folder/accepted-requirements/accepted-requirements.component';
+import { RequirementFormComponent } from './components/requirements_folder/requirement-form/requirement-form.component';
+import { EditRequirementFormComponent } from './components/requirements_folder/edit-requirement-form/edit-requirement-form.component';
 import { LoginComponent } from "./components/login/login/login.component";
 import { RegisterComponent } from "./components/login/register/register.component";
 import { UserService } from './services/user.service';
@@ -51,7 +55,15 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
     ReactiveFormsModule,
     WatermelonRouter,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatIconModule
   ],
   entryComponents: [IssuesComponent, IssueDialogComponent],
   providers: [UserService],

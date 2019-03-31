@@ -24,3 +24,8 @@ td {
 .requirement_type {
     background-color: rgba(254, 97, 72);
 }
+
+.mat-success {
+    background-color: orange;
+    color: #fff;
+}

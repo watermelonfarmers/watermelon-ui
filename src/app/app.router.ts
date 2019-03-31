@@ -2,11 +2,11 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { RequirementsComponent } from './components/requirements_folder/requirements/requirements.component';
 import { ProfileComponent } from "./components/profile/profile.component";
-import { RequirementsComponent } from './components/requirements/requirements.component';
 import { IssuesComponent } from "./components/issues/issues.component";
-import { RequirementFormComponent } from './components/requirement-form/requirement-form.component';
-import { EditRequirementFormComponent} from './components/edit-requirement-form/edit-requirement-form.component';
+import { RequirementFormComponent } from './components/requirements_folder/requirement-form/requirement-form.component';
+import { EditRequirementFormComponent} from './components/requirements_folder/edit-requirement-form/edit-requirement-form.component';
 import { LoginComponent } from './components/login/login/login.component';
 import { RegisterComponent } from './components/login/register/register.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
@@ -40,7 +40,7 @@ const appRoutes: Routes = [
         canActivate: [AuthenticationGuard]
     },
     {
-        path: 'requirements/edit/:id',
+        path: 'requirements/:id',
         component: EditRequirementFormComponent,
         canActivate: [AuthenticationGuard]
     },
