@@ -64,11 +64,12 @@ export class MessagesComponent implements OnInit {
     }
     let newMessage: MessageRequest = new MessageRequest();
     newMessage.channelId = 194; //TODO this should be the current channelId
-    newMessage.userId = this.user.userId,
-    newMessage.message = this.userInput,
+    newMessage.userId = this.user.userId;
+    newMessage.message = this.userInput;
     
     this.selectedGroup.messages.push(newMessage);
     this.messagesService.creatMessage(newMessage).subscribe((response) => {
+      this.getMessages();
       return response;
     });
     this.userInput = '';
