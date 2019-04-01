@@ -72,7 +72,7 @@ export class IssuesComponent implements OnInit {
 		});
 	}
 
-	editIssue(issue:Issue): void  {
+	editIssue(issue: Issue): void {
 		const createIssueDialog = this.dialog.open(IssueDialogComponent, {
 			width: '800px',
 			data: { issue: issue, option: "UPDATE" }
@@ -82,6 +82,9 @@ export class IssuesComponent implements OnInit {
 			if (result) {
 				let issueRequest: IssueRequest = this.mapIssueToIssueRequest(result);
 				this.updateIssue(issueRequest, issue.issueId);
+			}
+			else {
+				this.getIssues();
 			}
 		});
 	}
@@ -94,7 +97,7 @@ export class IssuesComponent implements OnInit {
 		else if (priority === 5) {
 			return "Medium"
 		}
-		else if (priority ===10) {
+		else if (priority === 10) {
 			return "High";
 		}
 	}
@@ -145,8 +148,10 @@ export class IssuesComponent implements OnInit {
 		this.issueService.updateIssue(issue, issueId).subscribe();
 	}
 
-	// testDeleteIssue() {
-	// 	this.issueService.deleteIssue(2).subscribe();
-	// }
+	deleteIssue(issueId: number) {
+		if (confirm('Are you sure you want to delete this issue?')) {
+			this.issueService.deleteIssue(issueId).subscribe(result => this.getIssues());
+		}
+	}
 
 }
