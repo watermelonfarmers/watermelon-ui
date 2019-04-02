@@ -16,31 +16,29 @@ describe('RequirementService', () => {
       id: 1,
       title: 'Test Title',
       description: 'Test Description',
-      created_time : "2019-03-05T03:20:24.015",
-      last_modified_time: "2019-03-05T03:20:24.015",
+      createdTime : "2019-03-05T03:20:24.015",
+      lastModifiedTime: "2019-03-05T03:20:24.015",
       priority : '10',
       status : 'NEW',
-      created_by_user : 'User 1',
-      due_date : "2019-03-05T03:20:24.015",
+      createdByUser : 'User 1',
+      dueDate : "2019-03-05T03:20:24.015",
       comments : [],
-      assigned_to : 'User 2',
-      archived : true,
-      url : 'test/url'
+      assignedToUser : 'User 2',
+      archived : true
     },
     {
       id: 2,
       title: 'Test Title2',
       description: 'Test Description2',
-      created_time : "2019-03-05T03:20:24.015",
-      last_modified_time: "2019-03-05T03:20:24.015",
+      createdTime : "2019-03-05T03:20:24.015",
+      lastModifiedTime: "2019-03-05T03:20:24.015",
       priority : '5',
       status : 'NEW',
-      created_by_user : 'User 1',
-      due_date : "2019-03-05T03:20:24.015",
+      createdByUser : 'User 1',
+      dueDate : "2019-03-05T03:20:24.015",
       comments : [],
-      assigned_to : 'User 2',
-      archived : true,
-      url : 'test/url'
+      assignedToUser : 'User 2',
+      archived : true
     },
 ];
 
@@ -102,16 +100,15 @@ describe('RequirementService', () => {
       id: 3,
       title: 'Test Title3',
       description: 'Test Description3',
-      created_time : "2019-03-05T03:20:24.015",
-      last_modified_time: "2019-03-05T03:20:24.015",
+      createdTime : "2019-03-05T03:20:24.015",
+      lastModifiedTime: "2019-03-05T03:20:24.015",
       priority : '10',
       status : 'NEW',
-      created_by_user : 'User 1',
-      due_date : "2019-03-05T03:20:24.015",
+      createdByUser : 'User 1',
+      dueDate : "2019-03-05T03:20:24.015",
       comments : [],
-      assigned_to : 'User 2',
-      archived : true,
-      url : 'test/url'
+      assignedToUser : 'User 2',
+      archived : true
     }
 
     requirementService.createRequirement(newRequirement).subscribe(
@@ -130,20 +127,22 @@ describe('RequirementService', () => {
       id: 4,
       title: 'Test Title4',
       description: 'Test Description4',
-      created_time : "2019-03-05T03:20:24.015",
-      last_modified_time: "2019-03-05T03:20:24.015",
+      createdTime : "2019-03-05T03:20:24.015",
+      lastModifiedTime: "2019-03-05T03:20:24.015",
       priority : '10',
       status : 'NEW',
-      created_by_user : 'User 1',
-      due_date : "2019-03-05T03:20:24.015",
+      createdByUser : 'User 1',
+      dueDate : "2019-03-05T03:20:24.015",
       comments : [],
-      assigned_to : 'User 2',
-      archived : true,
-      url : 'test/url'
+      assignedToUser : 'User 2',
+      archived : true
     }
 
     requirementService.updateRequirement(updateRequirement).subscribe(
-      requirement => expect(requirement).toEqual(updateRequirement)
+      requirement => {
+        console.log(requirement);
+        expect(requirement).toEqual(updateRequirement)
+      }
       
     );
 

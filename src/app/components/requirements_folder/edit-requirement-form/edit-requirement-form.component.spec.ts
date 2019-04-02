@@ -10,6 +10,7 @@ import { RequirementService } from 'src/app/services/requirement.service';
 import { MockRequirementService } from 'src/app/testing/mockRequirementService';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogRef } from '@angular/material';
+import { Requirement } from 'src/app/classes/requirement';
 
 describe('EditRequirementFormComponent', () => {
   let component: EditRequirementFormComponent;
@@ -46,6 +47,8 @@ describe('EditRequirementFormComponent', () => {
 
     //Will have to remove line for unit testing
     component.getUsers = ()=> {};
+    component.requirement = new Requirement();
+    component.requirement.createdByUser = {userId: 0, firstName: 'first', lastName: 'last', userName: 'test'}
     fixture.detectChanges();
   });
 
@@ -58,6 +61,7 @@ describe('EditRequirementFormComponent', () => {
   })
 
   it('title is invalid when blank', () => {
+
     let title = component.editRequirementForm.controls.title;
     title.setValue('');
     fixture.detectChanges();
@@ -135,34 +139,34 @@ describe('EditRequirementFormComponent', () => {
   }); 
 
   it('assigned to is valid when set to a user', () => {
-    let assigned_to = component.editRequirementForm.controls.assigned_to;
-    assigned_to.setValue('User 1');
+    let assignedToUser = component.editRequirementForm.controls.assignedToUser;
+    assignedToUser.setValue('User 1');
     fixture.detectChanges();
-    expect(assigned_to.valid).toBeTruthy();
+    expect(assignedToUser.valid).toBeTruthy();
   }); 
 
   it('due date is invalid if it is earlier than the current date', () => {
-    let due_date = component.editRequirementForm.controls.due_date;
+    let dueDate = component.editRequirementForm.controls.dueDate;
     let date = new Date(2000, 0, 1);
-    due_date.setValue(date);
+    dueDate.setValue(date);
     fixture.detectChanges();
-    expect(due_date.valid).toBeFalsy();
+    expect(dueDate.valid).toBeFalsy();
   });
 
   it('due date is valid if it is the current date', () => {
-    let due_date = component.editRequirementForm.controls.due_date;
+    let dueDate = component.editRequirementForm.controls.dueDate;
     let date = new Date()
-    due_date.setValue(date);
+    dueDate.setValue(date);
     fixture.detectChanges();
-    expect(due_date.valid).toBeTruthy();
+    expect(dueDate.valid).toBeTruthy();
   });
 
   it('due date is valid if it is later than the current date', () => {
-    let due_date = component.editRequirementForm.controls.due_date;
+    let dueDate = component.editRequirementForm.controls.dueDate;
     let date = new Date(5000, 0, 1);
-    due_date.setValue(date);
+    dueDate.setValue(date);
     fixture.detectChanges();
-    expect(due_date.valid).toBeTruthy();
+    expect(dueDate.valid).toBeTruthy();
   });
 
 });

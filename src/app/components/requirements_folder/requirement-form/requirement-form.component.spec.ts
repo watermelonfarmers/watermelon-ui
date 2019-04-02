@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatCardModule, MatFormFieldModule, MatInputModule } from "@angular/material";
+import { MatCardModule, MatFormFieldModule, MatInputModule, MAT_DIALOG_DATA } from "@angular/material";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatSelectModule, MatNativeDateModule } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -8,6 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RequirementFormComponent } from './requirement-form.component';
 import { RequirementService } from 'src/app/services/requirement.service';
 import { MockRequirementService } from 'src/app/testing/mockRequirementService';
+import { MatDialogRef } from '@angular/material';
 
 describe('RequirementFormComponent', () => {
   let component: RequirementFormComponent;
@@ -27,10 +28,11 @@ describe('RequirementFormComponent', () => {
           NoopAnimationsModule
         ],
       declarations: [ RequirementFormComponent ],
-      providers: [{
-        provide: RequirementService,
-        useClass: MockRequirementService
-      }]
+      providers: [
+        {provide: RequirementService, useClass: MockRequirementService},
+        {provide: MAT_DIALOG_DATA, useValue: {}},
+        {provide: MatDialogRef, useValue: {}}
+    ]
     })
     .compileComponents();
   }));

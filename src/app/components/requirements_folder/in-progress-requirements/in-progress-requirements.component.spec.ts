@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RequirementService } from '../../../services/requirement.service';
 import { InProgressRequirementsComponent } from './in-progress-requirements.component';
 import { MockRequirementService } from '../../../testing/mockRequirementService';
+import { MatIconModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 
 describe('InProgressRequirementsComponent', () => {
   let component: InProgressRequirementsComponent;
@@ -10,12 +12,15 @@ describe('InProgressRequirementsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        MatIconModule,
+        MatDialogModule
+      ],
       declarations: [ InProgressRequirementsComponent],
-       providers: [{
-         provide: RequirementService,
-         useClass : MockRequirementService
-        }]
+       providers: [
+         {provide: RequirementService, useClass : MockRequirementService}
+      ]
     })
     .compileComponents();
   }));
