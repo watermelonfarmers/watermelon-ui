@@ -26,6 +26,7 @@ import { LoginComponent } from "./components/login/login/login.component";
 import { RegisterComponent } from "./components/login/register/register.component";
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './components/profile/profile.component';
+import { IssueDialogComponent } from './components/issues/issue-dialog/issue-dialog.component';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 
 @NgModule({
@@ -44,6 +45,7 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    IssueDialogComponent,
     DateFormatPipe
   ],
   imports: [
@@ -63,6 +65,7 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
     MatDialogModule,
     MatIconModule
   ],
+  entryComponents: [IssuesComponent, IssueDialogComponent],
   providers: [UserService],
   bootstrap: [AppComponent]
 })

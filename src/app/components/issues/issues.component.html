@@ -1,42 +1,39 @@
-<div class="test"></div>>
-<div class="container">
-
-<header>
-  	<section>
-    	<label for="title">Issue</label>
-    	<input type="text"  [(ngModel)]="issue" (keydown)="addIssue($event)" placeholder="add issue" />
-  	</section>
-</header>
-
-<section>
-  	<h2>Issues in progress
-    	<span>{{issueList.length}}</span>
-  	</h2>
-  	<ol class="demo-box">
-    	<li *ngFor="let item of issueList; let key = index" >
-      		<input type="checkbox" (click)="changeIssue(key,true)">
-      		<p>{{item.issue}}</p>
-      		<a (click)="deleteIssue(key,true)">-</a>
-    	</li>
-  	</ol>
-  	<h2>Fixed Issues
-    	<span>{{doneList.length}}</span>
-  	</h2>
-  	<ul>
-    	<li *ngFor="let item of doneList;let key = index">
-      		<input type="checkbox" (click)="changeIssue(key,false)" checked='checked'>
-      		<p>{{item.issue}}</p>
-      		<a (click)="deleteIssue(key,false)">-</a>
-    	</li>
-  	</ul>
+<section class="issue-container">
+	<mat-card class="issue-card">
+		<div class="action-bar">
+			<form [formGroup]="issuesForm" #formDir="ngForm">
+				<mat-form-field>
+					<mat-label>Status</mat-label>
+					<mat-select formControlName="statusSelect" disableOptionCentering>
+						<mat-option>None</mat-option>
+						<mat-option *ngFor="let s of status" [value]="s.value">
+							{{s.viewValue}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
+			<i class="action-bar__new glyphicon glyphicon-plus" title="Create New Issue" (click)="addNewIssue()"></i>
+		</div>
+		<div class="issue-card__header">
+			<h2 class="issue-card__header--title">{{title}}</h2>
+			<p class="issue-card__header--count" *ngIf="issues">{{count}}</p>
+		</div>
+		<div class="issue-list">
+			<mat-nav-list class="issue-list__list">
+				<a mat-list-item *ngFor="let issue of filteredIssues()" (click)="editIssue(issue)">
+					<div class="issue-list__description">
+						<p class="issue-list__title">{{issue.title}}</p>
+						<p class="issue-list__date">{{issue.created}}</p>
+					</div>
+					<div class="issue-list__actions">
+						<!-- <p class="issue-list__user">{{issue.createdByUser.userName}}</p> -->
+						<p class="issue-list__priority">{{translatePriority(issue.priority)}}</p>
+						<i class="issue-list__delete">
+							<mat-icon [inline]="true" (click)="deleteIssue(issue.issueId);$event.stopPropagation()">delete</mat-icon>
+						</i>
+					</div>
+				</a>
+			</mat-nav-list>
+		</div>
+	</mat-card>
 </section>
-
-</div>
-
-<!-- <button type="button" (click)="testGetIssues()">Get Issues</button>
-<button type="button" (click)="testGetOneIssue()">Get One Issue</button>
-<button type="button" (click)="testCreateIssue()">Create Issue</button>
-<button type="button" (click)="testUpdateIssue()">Update Issue</button>
-<button type="button" (click)="testDeleteIssue()">Delete Issue</button> -->
-
-
