@@ -1,119 +1,135 @@
 import { Component, OnInit } from '@angular/core';
-import { IssueService } from '../../services/issue.service'
+import { MatDialog } from '@angular/material';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';  //NgModel lives here
+import { FormGroup, FormControl } from '@angular/forms';
 import { Issue } from 'src/app/classes/issue';
+import { IssueService } from '../../services/issue.service'
 import { IssueRequest } from 'src/app/classes/issue-request';
+import { IssueDialogComponent } from './issue-dialog/issue-dialog.component';
+import { UserService } from 'src/app/services/user.service';
 
 
-@NgModule({
-
-	imports: [
-		BrowserModule,
-		FormsModule  //import the FormsModule before binding with [(ngModel)]
-	],
-
-})
+export interface Status {
+	value: string;
+	viewValue: string;
+}
 
 @Component({
 	selector: 'app-issues',
 	templateUrl: './issues.component.html',
-	styleUrls: ['./issues.component.css']
+	styleUrls: ['./issues.component.scss']
 })
 export class IssuesComponent implements OnInit {
 
-	public issues: Array<Issue>;
-	public issue: Issue;
-	public issueList = [];
-	public doneList = [];
+	status: Status[] = [
+		{ value: 'NEW', viewValue: 'New' },
+		{ value: 'IN PROGRESS', viewValue: 'In Progress' },
+		{ value: 'COMPLETED', viewValue: 'Completed' }
+	];
 
-	constructor(private issueService: IssueService) { }
+	issuesForm: FormGroup = new FormGroup({
+		'statusSelect': new FormControl('')
+	});
+
+	public issues: Array<Issue>;
+	public filter: string;
+	public title: string;
+	public count: number;
+
+	constructor(private issueService: IssueService, private userService: UserService, public dialog: MatDialog) { }
 
 	ngOnInit() {
-		this.initIssue();
+		this.getIssues();
+		this.issuesForm.get('statusSelect').valueChanges.subscribe(value => this.filter = value)
 	}
 
-	initIssue() {
-		// var issueArr = this.storage.getItem('issueList');
-		// if (issueArr) {
-		//   this.issueList = issueArr
-		// }
-		// var doneArr = this.storage.getItem('doneList');
-		// if (doneArr) {
-		// 	this.doneList = doneArr
-		// }
-	}
-
-
-
-	addIssue(event) {
-		console.log("nnnnnn");
-		let issueObj = {
-			issue: this.issue,
-			done: false
+	filteredIssues() {
+		if (this.issues && this.filter) {
+			this.title = this.filter + " Issues";
+			let filteredIssues = this.issues.filter(item => item.status == this.filter);
+			this.count = filteredIssues.length
+			return filteredIssues;
 		}
-		// if (event.keyCode == 13) {
-		// 	var tempList = this.storage.getItem('issueList');
-		// 	if (tempList) {
-		// 		tempList.push(issueObj);
-		// 		this.storage.setItem('issueList', tempList);
-		// 	}
-		// 	else {
-		// 		var tempData = []
-		// 		tempData.push(issueObj)
-		// 		this.storage.setItem('issueList', tempData);
-		// 	}
-
-		// 	console.log(tempData);
-		// 	this.issueList.push(issueObj);
-		// 	this.issue = '';
-		// }
-		console.log(this.issueList);
-
+		this.title = "All Issues"
+		if (this.issues) {
+			this.count = this.issues.length
+		}
+		return this.issues;
 	}
 
-	deleteIssue(index, done) {
-		if (done) {
-			this.issueList.splice(index, 1);
-			//this.storage.setItem('issueList', this.issueList)
-		} else {
-			this.doneList.splice(index, 1);
-			//this.storage.setItem('doneList', this.doneList)
+	addNewIssue(): void {
+		let newIssue: Issue = {} as Issue;
+		const createIssueDialog = this.dialog.open(IssueDialogComponent, {
+			width: '800px',
+			data: { issue: newIssue, option: "CREATE" }
+		});
+
+		createIssueDialog.afterClosed().subscribe(result => {
+			if (result) {
+				let issueRequest: IssueRequest = this.mapIssueToIssueRequest(result);
+				this.createIssue(issueRequest);
+			}
+		});
+	}
+
+	editIssue(issue: Issue): void {
+		const createIssueDialog = this.dialog.open(IssueDialogComponent, {
+			width: '800px',
+			data: { issue: issue, option: "UPDATE" }
+		});
+
+		createIssueDialog.afterClosed().subscribe(result => {
+			if (result) {
+				let issueRequest: IssueRequest = this.mapIssueToIssueRequest(result);
+				this.updateIssue(issueRequest, issue.issueId);
+			}
+			else {
+				this.getIssues();
+			}
+		});
+	}
+
+	//TOOD we might want to revisit how priority works
+	translatePriority(priority: number): String {
+		if (priority === 1) {
+			return "Low"
+		}
+		else if (priority === 5) {
+			return "Medium"
+		}
+		else if (priority === 10) {
+			return "High";
 		}
 	}
 
-
-	changeIssue(index, done) {
-		if (done) {
-			var tempIssue = this.issueList[index]
-			this.doneList.push(tempIssue);
-			this.issueList.splice(index, 1);
-			//this.storage.setItem('issueList', this.issueList)
-			//this.storage.setItem('doneList', this.doneList)
-		} else {
-			var tempDone = this.doneList[index]
-			this.issueList.push(tempDone);
-			this.doneList.splice(index, 1);
-			//this.storage.setItem('todoList', this.issueList)
-			//this.storage.setItem('doneList', this.doneList)
+	/***************************************************************************
+	 * MAPPERS
+	*************************************************************************** */
+	mapIssueToIssueRequest(issue: Issue): IssueRequest {
+		let issueRequest: IssueRequest = new IssueRequest();
+		issueRequest.title = issue.title;
+		issueRequest.description = issue.description;
+		issueRequest.priority = issue.priority;
+		issueRequest.status = issue.status;
+		if (issue.createdByUser) {
+			issueRequest.createdByUserId = issue.createdByUser.userId;
 		}
-
+		if (issue.assignedUser) {
+			issueRequest.assignedUserId = issue.assignedUser.userId;
+		}
+		return issueRequest;
 	}
 
 	/***************************************************************************
 	 * TEST SERVICE CALLS
 	*************************************************************************** */
 
-	// testGetIssues() {
+	getIssues() {
 
-	// 	this.issueService.getIssues().subscribe(results => {
-	// 		this.issues = results;
-	// 		console.log(this.issues);
-	// 		console.log(this.issues[0].title);
-	// 	});		
-	// }
+		this.issueService.getIssues().subscribe(results => {
+			this.issues = results;
+		});
+	}
 
 	// testGetOneIssue() {
 
@@ -121,30 +137,21 @@ export class IssuesComponent implements OnInit {
 	// 		this.issue = result
 	// 		console.log(this.issue);
 	// 		console.log(this.issue.title);
-	// 	});		
+	// 	});
 	// }
 
-	// testCreateIssue() {
-	// 	let issue: IssueRequest = new IssueRequest();
-	// 	issue.title = "this is an issue title";
-	// 	issue.description = "this is an issue description"
-	// 	issue.status = "IN PROGRESS"
-	// 	issue.priority = 10;
-	// 	issue.createdByUserId = 1;
+	createIssue(issue: IssueRequest) {
+		this.issueService.createIssue(issue).subscribe(result => this.getIssues());
+	}
 
-	// 	this.issueService.createIssue(issue).subscribe();
-	// }
+	updateIssue(issue: IssueRequest, issueId: number) {
+		this.issueService.updateIssue(issue, issueId).subscribe();
+	}
 
-	// testUpdateIssue() {
-	// 	let issue: IssueRequest = new IssueRequest();
-	// 	issue.status = "COMPLETE"
-	// 	issue.assignedUserId = 1;
-
-	// 	this.issueService.updateIssue(issue, 1).subscribe();
-	// }
-
-	// testDeleteIssue() {
-	// 	this.issueService.deleteIssue(2).subscribe();
-	// }
+	deleteIssue(issueId: number) {
+		if (confirm('Are you sure you want to delete this issue?')) {
+			this.issueService.deleteIssue(issueId).subscribe(result => this.getIssues());
+		}
+	}
 
 }
