@@ -99,18 +99,13 @@ let dummyUsers = [
   });
 
   it('should spy on getRequirements and return dummy data', () => {
-    var spy = spyOn(component, 'getRequirements').and.returnValue(dummyRequirements);
-    expect(component.getRequirements()).toEqual(dummyRequirements);
+    let spy = spyOn(component, 'getRequirements').and.returnValue(dummyRequirements);
+    expect(component.getRequirements).toEqual(dummyRequirements);
   });
 
-  it('should spy on getUsers', () => {
+  it('should spy on and call getUsers', () => {
     let spy = spyOn(component, 'getUsers');
-    component.getUsers();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should spy on getUsers and return dummy users', () => {
-    var spy = spyOn(component, 'getUsers').and.returnValue(dummyUsers);
-    expect(component.getUsers()).toEqual(dummyUsers);
-  });
 });

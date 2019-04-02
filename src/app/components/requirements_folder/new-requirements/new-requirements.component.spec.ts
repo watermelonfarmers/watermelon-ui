@@ -45,10 +45,4 @@ describe('NewRequirementsComponent', () => {
     expect(spy).toHaveBeenCalled;
   });
 
-  it('should call deleteRequirement', () => {
-    let id = 2;
-    let spy = spyOn(component, 'deleteRequirement').and.returnValue('requirement 2 deleted');
-    expect(component.deleteRequirement(id)).toEqual('requirement 2 deleted');
-  })
-
 });

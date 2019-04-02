@@ -20,6 +20,7 @@ export class EditRequirementFormComponent implements OnInit {
   users: User [];
   currentDate : Date = new Date();
   dataAvailable : boolean = false;
+  createdBy : User;
 
   requirement : Requirement;
   //id : Number = Number(this.route.params['value'].id);
@@ -31,6 +32,7 @@ export class EditRequirementFormComponent implements OnInit {
     'status' : new FormControl('', Validators.required),
     'priority' : new FormControl('', Validators.required),
     'assignedToUser': new FormControl('', Validators.required),
+    'createdByUser' : new FormControl('', Validators.required),
     'dueDate' : new FormControl('', Validators.required)
   });
 
@@ -49,13 +51,13 @@ export class EditRequirementFormComponent implements OnInit {
     this.requirementService.readOneRequirement(this.id)
     .subscribe((requirement) => {
       this.requirement = requirement;
-
-      this.requirement.createdByUser = this.requirement.createdByUser.userId;
+      this.requirement.createdByUser = this.requirement.createdByUser.firstName + ' ' + this.requirement.createdByUser.lastName;
       this.requirement.createdTime = this.requirement.createdTime.split("T")[0];
       this.requirement.lastModifiedTime = this.requirement.lastModifiedTime.split("T")[0];
       this.requirement.dueDate = this.requirement.dueDate.split("T")[0];
 
       this.dataAvailable = true;
+
     })
   }
 
@@ -77,6 +79,7 @@ export class EditRequirementFormComponent implements OnInit {
     this.requirement.status = this.editRequirementForm.value.status;
     this.requirement.priority = this.editRequirementForm.value.priority;
     this.requirement.comments = [];
+    this.requirement.createdByUser = this.requirement.createdByUser.userId;
 
     this.requirementService.updateRequirement(this.requirement)
       .subscribe(() => {
