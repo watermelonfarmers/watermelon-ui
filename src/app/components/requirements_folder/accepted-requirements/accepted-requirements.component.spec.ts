@@ -11,6 +11,7 @@ import { MatSelectModule, MatNativeDateModule, MatDialogModule } from '@angular/
 describe('AcceptedRequirementsComponent', () => {
   let component: AcceptedRequirementsComponent;
   let fixture: ComponentFixture<AcceptedRequirementsComponent>;
+  let spy : any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,14 +45,9 @@ describe('AcceptedRequirementsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should spy on deleteRequirment', ()=> {
+  it('should spy on and call deleteRequirment', ()=> {
     let spy = spyOn(component, 'deleteRequirement');
-    expect(spy).toHaveBeenCalled;
+    expect(component.deleteRequirement).toHaveBeenCalled;
   });
 
-  it('should call deleteRequirement', () => {
-    let id = 2;
-    let spy = spyOn(component, 'deleteRequirement').and.returnValue('requirement 2 deleted');
-    expect(component.deleteRequirement(id)).toEqual('requirement 2 deleted');
-  });
 });

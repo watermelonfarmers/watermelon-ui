@@ -5,6 +5,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MockRequirementService } from '../../../testing/mockRequirementService';
 import { RequirementService } from '../../../services/requirement.service';
 import { Requirement } from '../../../classes/requirement';
+import { MatIconModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 
 describe('RequirementsComponent', () => {
   let component: RequirementsComponent;
@@ -15,31 +17,29 @@ describe('RequirementsComponent', () => {
       id: 1,
       title: 'Test Title',
       description: 'Test Description',
-      created_time : "2019-03-05T03:20:24.015",
-      last_modified_time: "2019-03-05T03:20:24.015",
+      createdTime : "2019-03-05T03:20:24.015",
+      lastModifiedTime: "2019-03-05T03:20:24.015",
       priority : '10',
       status : 'NEW',
-      created_by_user : 'User 1',
-      due_date : "2019-03-05T03:20:24.015",
+      createdByUser : 'User 1',
+      dueDate : "2019-03-05T03:20:24.015",
       comments : [],
-      assigned_to : 'User 2',
-      archived : true,
-      url : 'test/url'
+      assignedToUser : 'User 2',
+      archived : true
     },
     {
       id: 2,
       title: 'Test Title2',
       description: 'Test Description2',
-      created_time : "2019-03-05T03:20:24.015",
-      last_modified_time: "2019-03-05T03:20:24.015",
+      createdTime : "2019-03-05T03:20:24.015",
+      lastModifiedTime: "2019-03-05T03:20:24.015",
       priority : '5',
       status : 'NEW',
-      created_by_user : 'User 1',
-      due_date : "2019-03-05T03:20:24.015",
+      createdByUser : 'User 1',
+      dueDate : "2019-03-05T03:20:24.015",
       comments : [],
-      assigned_to : 'User 2',
-      archived : true,
-      url : 'test/url'
+      assignedToUser : 'User 2',
+      archived : true
     },
 ];
 
@@ -58,7 +58,11 @@ let dummyUsers = [
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        MatDialogModule,
+        MatIconModule
+      ],
       declarations: [ RequirementsComponent ],
       providers: [RequirementsComponent, {
         provide: RequirementService,
@@ -95,18 +99,13 @@ let dummyUsers = [
   });
 
   it('should spy on getRequirements and return dummy data', () => {
-    var spy = spyOn(component, 'getRequirements').and.returnValue(dummyRequirements);
-    expect(component.getRequirements()).toEqual(dummyRequirements);
+    let spy = spyOn(component, 'getRequirements').and.returnValue(dummyRequirements);
+    expect(component.getRequirements).toEqual(dummyRequirements);
   });
 
-  it('should spy on getUsers', () => {
+  it('should spy on and call getUsers', () => {
     let spy = spyOn(component, 'getUsers');
-    component.getUsers();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should spy on getUsers and return dummy users', () => {
-    var spy = spyOn(component, 'getUsers').and.returnValue(dummyUsers);
-    expect(component.getUsers()).toEqual(dummyUsers);
-  });
 });

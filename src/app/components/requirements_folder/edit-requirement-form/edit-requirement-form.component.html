@@ -1,6 +1,7 @@
 <div *ngIf="dataAvailable" class='container'>
     <mat-card>
       <mat-card-title color='primary'>Edit Requirement</mat-card-title>
+      <mat-card-subtitle>Created By {{this.requirement.createdByUser}}</mat-card-subtitle>
       <form [formGroup]='editRequirementForm' #formDir="ngForm">
         <mat-form-field class="container__title">
           <input matInput placeholder="Title" formControlName="title" [(ngModel)]="requirement.title" required>
