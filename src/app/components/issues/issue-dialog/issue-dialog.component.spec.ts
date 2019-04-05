@@ -7,6 +7,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('IssueDialogComponent', () => {
+
+  const ONE_FIFTY: string = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+  const ONE_FIFTY_ONE: string = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+  const TWO_FIFTY: string = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+  const TWO_FIFTY_ONE: string = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
   let component: IssueDialogComponent;
   let fixture: ComponentFixture<IssueDialogComponent>;
 
@@ -41,4 +46,77 @@ describe('IssueDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('title should be valid when one hundred fifty characters or less', ()  => {
+    let title = component.issueForm.controls['title'];
+    title.setValue(ONE_FIFTY)
+    fixture.detectChanges();
+    expect(title.valid).toBeTruthy();
+  });
+
+  it('title should be invalid when one hundred one characters or more', ()  => {
+    let title = component.issueForm.controls['title'];
+    title.setValue(ONE_FIFTY_ONE)
+    fixture.detectChanges();
+    expect(title.valid).toBeFalsy();
+  });
+
+  it('title should be invalid when blank', ()  => {
+    let title = component.issueForm.controls['title'];
+    title.setValue('')
+    fixture.detectChanges();
+    expect(title.valid).toBeFalsy();
+  });
+
+  it('description should be valid when two hundred fifty characters or less', ()  => {
+    let description = component.issueForm.controls['description'];
+    description.setValue(TWO_FIFTY)
+    fixture.detectChanges();
+    expect(description.valid).toBeTruthy();
+  });
+
+  it('description should be invalid when two hundred fifty one characters or more', ()  => {
+    let description = component.issueForm.controls['description'];
+    description.setValue(TWO_FIFTY_ONE)
+    fixture.detectChanges();
+    expect(description.valid).toBeFalsy();
+  });
+
+  it('description should be invalid when blank', ()  => {
+    let description = component.issueForm.controls['description'];
+    description.setValue('')
+    fixture.detectChanges();
+    expect(description.valid).toBeFalsy();
+  });
+
+  it('status should be valid when not blank', ()  => {
+    let status = component.issueForm.controls['status'];
+    status.setValue('XXXX')
+    fixture.detectChanges();
+    expect(status.valid).toBeTruthy();
+  });
+
+  it('status should be invalid when blank', ()  => {
+    let status = component.issueForm.controls['status'];
+    status.setValue('')
+    fixture.detectChanges();
+    expect(status.valid).toBeFalsy();
+  });
+
+  it('priority should be valid when not blank', ()  => {
+    let priority = component.issueForm.controls['priority'];
+    priority.setValue('XXXX')
+    fixture.detectChanges();
+    expect(priority.valid).toBeTruthy();
+  });
+
+  it('priority should be invalid when blank', ()  => {
+    let priority = component.issueForm.controls['priority'];
+    priority.setValue('')
+    fixture.detectChanges();
+    expect(priority.valid).toBeFalsy();
+  });
+
+
+
 });
