@@ -5,6 +5,7 @@ import { MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, Mat
 import { IssuesComponent } from './issues.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 
 describe('IssuesComponent', () => {
@@ -25,7 +26,8 @@ describe('IssuesComponent', () => {
         MatSelectModule,
         MatListModule,
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        RouterModule.forRoot([])
       ],
       declarations: [ IssuesComponent ]
     })

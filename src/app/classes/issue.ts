@@ -10,5 +10,10 @@ export interface Issue {
     status: string;
     createdByUser: User;
     assignedUser: User;
+    relatedRequirements: Array<RelatedRequirement>;
+}
 
+interface RelatedRequirement {
+    requirementId: number;
+    title: string;
 }

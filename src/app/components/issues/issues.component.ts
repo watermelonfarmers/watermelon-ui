@@ -7,6 +7,7 @@ import { IssueService } from '../../services/issue.service'
 import { IssueRequest } from 'src/app/classes/issue-request';
 import { IssueDialogComponent } from './issue-dialog/issue-dialog.component';
 import { UserService } from 'src/app/services/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 export interface Status {
@@ -36,11 +37,15 @@ export class IssuesComponent implements OnInit {
 	public title: string;
 	public count: number;
 
-	constructor(private issueService: IssueService, private userService: UserService, public dialog: MatDialog) { }
+	constructor(private issueService: IssueService, private userService: UserService, public dialog: MatDialog, private activatedRoute: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.getIssues();
 		this.issuesForm.get('statusSelect').valueChanges.subscribe(value => this.filter = value)
+
+		if (this.activatedRoute.snapshot.params['issueId']) {
+			this.getOneIssueForNavigation(this.activatedRoute.snapshot.params['issueId']);
+		}
 	}
 
 	filteredIssues() {
@@ -74,7 +79,7 @@ export class IssuesComponent implements OnInit {
 
 	editIssue(issue: Issue): void {
 		const createIssueDialog = this.dialog.open(IssueDialogComponent, {
-			width: '800px',
+			width: '70rem',
 			data: { issue: issue, option: "UPDATE" }
 		});
 
@@ -131,14 +136,9 @@ export class IssuesComponent implements OnInit {
 		});
 	}
 
-	// testGetOneIssue() {
-
-	// 	this.issueService.getIssueById(1).subscribe(result => {
-	// 		this.issue = result
-	// 		console.log(this.issue);
-	// 		console.log(this.issue.title);
-	// 	});
-	// }
+	getOneIssueForNavigation(issueId: number) {
+		this.issueService.getIssueById(issueId).subscribe(result => this.editIssue(result));
+	}
 
 	createIssue(issue: IssueRequest) {
 		this.issueService.createIssue(issue).subscribe(result => this.getIssues());

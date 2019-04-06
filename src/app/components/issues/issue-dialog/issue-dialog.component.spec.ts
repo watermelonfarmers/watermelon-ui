@@ -2,9 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IssueDialogComponent } from './issue-dialog.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatOptionModule, MatSelectModule, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatOptionModule, MatSelectModule, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MatInputModule, MatCardTitle, MatCardModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 describe('IssueDialogComponent', () => {
 
@@ -26,7 +28,10 @@ describe('IssueDialogComponent', () => {
         MatDialogModule,
         MatInputModule,
         HttpClientTestingModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        MatCardModule,
+        RouterTestingModule,
+        RouterModule.forRoot([])
       ],
       declarations: [IssueDialogComponent],
       providers: [

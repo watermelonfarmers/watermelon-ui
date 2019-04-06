@@ -4,7 +4,7 @@ import { Issue } from 'src/app/classes/issue';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { IssueRequest } from 'src/app/classes/issue-request';
+import { Router } from '@angular/router';
 
 export interface IssueDialogData {
   issue: Issue;
@@ -39,7 +39,6 @@ export class IssueDialogComponent implements OnInit {
     { value: 'IN PROGRESS', viewValue: 'In Progress' },
     { value: 'COMPLETED', viewValue: 'Completed' }
   ];
-
   
   public dialogTitle;
   public buttonTitle;
@@ -59,11 +58,11 @@ export class IssueDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<IssueDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IssueDialogData,
     private userService: UserService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private router: Router) {
 
     dialogRef.disableClose = true;
     this.issue = data.issue;
-
 
     if (data.option === "CREATE") {
       this.dialogTitle = "Add a new Issue";
@@ -74,6 +73,7 @@ export class IssueDialogComponent implements OnInit {
       this.issue.createdByUser = user;
     }
     else if (data.option === "UPDATE") {
+      this.dialogTitle = "View and Edit Issue";
       this.buttonTitle = "Update";
     }
 
