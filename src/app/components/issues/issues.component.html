@@ -23,7 +23,7 @@
 				<a mat-list-item *ngFor="let issue of filteredIssues()" (click)="editIssue(issue)">
 					<div class="issue-list__description">
 						<p class="issue-list__title">{{issue.title}}</p>
-						<p class="issue-list__date">{{issue.created}}</p>
+						<p class="issue-list__date">{{issue.created | dateFormat}}</p>
 					</div>
 					<div class="issue-list__actions">
 						<!-- <p class="issue-list__user">{{issue.createdByUser.userName}}</p> -->

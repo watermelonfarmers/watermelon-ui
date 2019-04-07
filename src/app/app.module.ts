@@ -67,7 +67,7 @@ import { ProjectsComponent } from './components/projects/projects.component';
     MatDialogModule,
     MatIconModule
   ],
-  entryComponents: [IssuesComponent, IssueDialogComponent],
+  entryComponents: [IssuesComponent, IssueDialogComponent, EditRequirementFormComponent],
   providers: [UserService],
   bootstrap: [AppComponent]
 })
