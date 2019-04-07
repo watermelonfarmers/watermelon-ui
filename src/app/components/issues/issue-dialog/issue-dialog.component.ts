@@ -42,6 +42,8 @@ export class IssueDialogComponent implements OnInit {
   
   public dialogTitle;
   public buttonTitle;
+  public createdByUserFirstLast;
+  public isUpdate: boolean;
 
   public issue: Issue;
   public users: Array<User>;
@@ -65,16 +67,20 @@ export class IssueDialogComponent implements OnInit {
     this.issue = data.issue;
 
     if (data.option === "CREATE") {
+      this.isUpdate = false;
       this.dialogTitle = "Add a new Issue";
       this.buttonTitle = "Create";
+      this.issueForm.get('status').disable();
 
       this.issue.status = "NEW";
       let user: User = this.userService.getUser();
       this.issue.createdByUser = user;
     }
     else if (data.option === "UPDATE") {
+      this.isUpdate = true;
       this.dialogTitle = "View and Edit Issue";
       this.buttonTitle = "Update";
+      this.createdByUserFirstLast = this.issue.createdByUser.firstName + " " + this.issue.createdByUser.lastName;
     }
 
     this.mapIssueToFormIssue();
