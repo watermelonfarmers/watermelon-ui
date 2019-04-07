@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
 
 export interface Project {
   id: number;
@@ -26,7 +25,11 @@ export class ProjectsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.currentProject = JSON.parse(sessionStorage.getItem('project'));
+    if (sessionStorage.getItem('project')) {
+      this.currentProject = JSON.parse(sessionStorage.getItem('project'));
+    } else {
+      this.setProject(this.projects[0]);
+    }
   }
 
   setProject(project: Project)   {
