@@ -1,5 +1,6 @@
-<h1 mat-dialog-title>{{this.dialogTitle}}</h1>
-<div mat-dialog-content class="dialog">
+<mat-card>
+  <mat-card-title color='primary'>{{this.dialogTitle}}</mat-card-title>
+  <mat-card-subtitle *ngIf="this.isUpdate">Created by {{this.createdByUserFirstLast}}</mat-card-subtitle>
   <form class="form" [formGroup]="issueForm" #formDir="ngForm" (ngSubmit)="save()">
     <mat-form-field>
       <input matInput placeholder="Title" formControlName="title">
@@ -7,27 +8,37 @@
     <mat-form-field>
       <textarea matInput placeholder="Description" formControlName="description"></textarea>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Status</mat-label>
-      <mat-select formControlName="status" name="status">
-        <mat-option *ngFor="let s of status" [value]="s.value">{{s.viewValue}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Priority</mat-label>
-      <mat-select formControlName="priority" name="priority">
-        <mat-option *ngFor="let p of priorities" [value]="p.value">{{p.viewValue}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Assign User</mat-label>
-      <mat-select [compareWith]="compareUser" formControlName="assigneduser" name="user">
-        <mat-option *ngFor="let user of users" [value]="user">{{user.userName}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div mat-dialog-actions>
+    <div class="form__selection">
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" name="status">
+          <mat-option *ngFor="let s of status" [value]="s.value">{{s.viewValue}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority" name="priority">
+          <mat-option *ngFor="let p of priorities" [value]="p.value">{{p.viewValue}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Assign User</mat-label>
+        <mat-select [compareWith]="compareUser" formControlName="assigneduser" name="user">
+          <mat-option *ngFor="let user of users" [value]="user">{{user.firstName + " " + user.lastName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form_list">
+      <span *ngIf="issue.relatedRequirements && issue.relatedRequirements.length > 0">Related Requirements:</span>
+      <ul>
+        <li *ngFor="let link of issue.relatedRequirements">
+          <a routerLink="/requirements/{{link.requirementId}}" (click)="cancel()"> {{ link.title }} </a>
+        </li>
+      </ul>
+    </div>
+    <div mat-dialog-actions class="form__buttons">
       <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
       <button mat-raised-button color="primary">{{buttonTitle}}</button>
     </div>
   </form>
-</div>
+</mat-card>

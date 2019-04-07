@@ -41,7 +41,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'requirements/:id',
-        component: EditRequirementFormComponent,
+        component: RequirementsComponent,
         canActivate: [AuthenticationGuard]
     },
     {
@@ -50,6 +50,11 @@ const appRoutes: Routes = [
     },
     {
         path: 'issues',
+        component: IssuesComponent,
+        canActivate: [AuthenticationGuard]
+    },
+    {
+        path: 'issues/:issueId',
         component: IssuesComponent,
         canActivate: [AuthenticationGuard]
     },
