@@ -30,6 +30,7 @@
 						<p class="issue-list__priority">{{translatePriority(issue.priority)}}</p>
 						<i class="issue-list__delete">
 							<mat-icon [inline]="true" (click)="deleteIssue(issue.issueId);$event.stopPropagation()">delete</mat-icon>
+							
 						</i>
 					</div>
 				</a>
