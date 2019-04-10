@@ -15,7 +15,7 @@ import { MatDialogRef } from '@angular/material';
 export class EditRequirementFormComponent implements OnInit {
 
 
-  statusOpts: string[] = ['NEW', 'IN PROGRESS', 'ACCEPTED'];
+  statusOpts: string[] = ['NEW', 'IN PROGRESS', 'ACCEPTED', 'BLOCKED'];
   priority : string [] = ['NORMAL', 'URGENT', 'VERY URGENT']
   users: User [];
   currentDate : Date = new Date();

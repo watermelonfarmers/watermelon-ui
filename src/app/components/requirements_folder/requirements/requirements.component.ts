@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { RequirementFormComponent } from '../requirement-form/requirement-form.component';
 import { EditRequirementFormComponent } from '../edit-requirement-form/edit-requirement-form.component';
 import { of, BehaviorSubject } from 'rxjs';
+import { Issue } from 'src/app/classes/issue';
 
 @Component({
   selector: 'app-requirements',
@@ -32,7 +33,9 @@ export class RequirementsComponent implements OnInit {
   newRequirements: Requirement [];
   inProgressRequirements: Requirement [];
   acceptedRequirements : Requirement [];
+  blockedRequirements : Requirement [];
   users: User [];
+  issues: Issue [];
   usersLoaded = new BehaviorSubject<boolean>(false);
 
   getRequirements() : void {
@@ -59,6 +62,11 @@ export class RequirementsComponent implements OnInit {
             return requirement;
           }
         });
+        this.blockedRequirements = this.requirements.filter((requirement) => {
+          if((requirement.status === 'BLOCKED') || (requirement.status === 'blocked')) {
+            return requirement;
+          }
+        });
     });
   }
 
@@ -67,6 +75,13 @@ export class RequirementsComponent implements OnInit {
     .subscribe(users => {
       this.users = users;
       this.usersLoaded.next(true);
+    })
+  }
+
+  getIssues() {
+    this.requirementService.getIssues()
+    .subscribe(issues => {
+      this.issues = issues;
     })
   }
 

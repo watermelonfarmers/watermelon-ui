@@ -2,16 +2,24 @@
   <div class = "row">
       <app-new-requirements 
         [newRequirements] = "newRequirements"
-        [users]="users">
+        [users]="users"
+        [issues]="issues">
         </app-new-requirements>
       <app-in-progress-requirements 
         [inProgressRequirements] = 'inProgressRequirements'
-        [users]="users">
+        [users]="users"
+        [issues]="issues">
       </app-in-progress-requirements>
       <app-accepted-requirements 
         [acceptedRequirements] = 'acceptedRequirements'
-        [users]="users">
-        </app-accepted-requirements>    
+        [users]="users"
+        [issues]="issues">
+        </app-accepted-requirements>
+      <app-blocked-requirements
+        [blockedRequirements] = "blockedRequirements"
+        [users]="users"
+        [issues]="issues">
+      </app-blocked-requirements>
   </div>
 </div>
 

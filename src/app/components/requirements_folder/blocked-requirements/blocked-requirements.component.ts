@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RequirementService } from '../../../services/requirement.service';
 import { User } from '../../../classes/user';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { RequirementFormComponent } from '../requirement-form/requirement-form.component';
 import { EditRequirementFormComponent } from '../edit-requirement-form/edit-requirement-form.component';
@@ -9,16 +9,16 @@ import { Issue } from 'src/app/classes/issue';
 
 
 @Component({
-  selector: 'app-in-progress-requirements',
-  templateUrl: './in-progress-requirements.component.html',
-  styleUrls: ['./in-progress-requirements.component.css']
+  selector: 'app-blocked-requirements',
+  templateUrl: './blocked-requirements.component.html',
+  styleUrls: ['./blocked-requirements.component.scss']
 })
-export class InProgressRequirementsComponent implements OnInit {
+export class BlockedRequirementsComponent implements OnInit {
 
   constructor(private router : Router, private requirementService : RequirementService, public dialog: MatDialog) {}
 
-  type: String = 'In Progress Requirements';
-  @Input() inProgressRequirements : any;
+  type: String = 'Blocked Requirements';
+  @Input() blockedRequirements : any;
   @Input() users: User [];
   @Input() issues: Issue [];
 
@@ -48,5 +48,7 @@ export class InProgressRequirementsComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+
 
 }

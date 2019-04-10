@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { RequirementFormComponent } from '../requirement-form/requirement-form.component';
 import { EditRequirementFormComponent } from '../edit-requirement-form/edit-requirement-form.component';
+import { Issue } from 'src/app/classes/issue';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AcceptedRequirementsComponent implements OnInit {
   type: String = 'Accepted Requirements';
   @Input() acceptedRequirements : any;
   @Input() users: User [];
+  @Input() issues: Issue [];
 
   openDialog(): void {
     const dialogRef = this.dialog.open(RequirementFormComponent, {

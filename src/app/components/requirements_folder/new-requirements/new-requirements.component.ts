@@ -5,6 +5,7 @@ import { User } from 'src/app/classes/user';
 import { MatDialog } from '@angular/material';
 import { RequirementFormComponent } from '../requirement-form/requirement-form.component';
 import { EditRequirementFormComponent } from '../edit-requirement-form/edit-requirement-form.component';
+import { Issue } from 'src/app/classes/issue';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class NewRequirementsComponent implements OnInit {
   type: String = 'New Requirements';
   @Input() newRequirements : any;
   @Input() users: User [];
+  @Input() issues: Issue [];
 
   openDialog(): void {
     const dialogRef = this.dialog.open(RequirementFormComponent, {

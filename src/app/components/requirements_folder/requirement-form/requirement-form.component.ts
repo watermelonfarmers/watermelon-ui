@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router} from '@angular/router';
 import { User } from '../../../classes/user';
 import { MatDialogRef } from '@angular/material';
+import { Issue } from 'src/app/classes/issue';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { MatDialogRef } from '@angular/material';
 export class RequirementFormComponent implements OnInit {
 
   users: User [];
+  issues: Issue [];
   priority : string [] = ['NORMAL', 'URGENT', 'VERY URGENT']
   currentDate = new Date();
 
@@ -24,7 +26,8 @@ export class RequirementFormComponent implements OnInit {
     'description': new FormControl('', [Validators.required, Validators.maxLength(100)]),
     'priority' : new FormControl('', Validators.required),
     'assignedToUser': new FormControl('', Validators.required),
-    'dueDate' : new FormControl('', Validators.required)
+    'dueDate' : new FormControl('', Validators.required),
+    'issue' : new FormControl('')
   });
 
   newRequirement : Requirement = new Requirement();
@@ -46,6 +49,7 @@ export class RequirementFormComponent implements OnInit {
       this.newRequirement.dueDate = new Date(this.newRequirement.dueDate).toISOString().substring(0,19);
       this.newRequirement.status = 'NEW';
       this.newRequirement.comments = [];
+      this.newRequirement.relatedIssue = this.requirementForm.value.issue.id;
 
 
        this.requirementService.createRequirement(this.newRequirement)
@@ -61,9 +65,17 @@ export class RequirementFormComponent implements OnInit {
       this.users = users;
     })
   };
+
+  getIssues() {
+    this.requirementService.getIssues()
+    .subscribe(issues => {
+      this.issues = issues;
+    })
+  }
     
   ngOnInit() {
     this.getUsers();
+    this.getIssues();
   }
 
 }
