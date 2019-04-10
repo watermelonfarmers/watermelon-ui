@@ -6,6 +6,7 @@ export interface Issue {
     lastModified: string;
     title: string;
     description: string;
+    estimate: number;
     priority: number;
     status: string;
     createdByUser: User;

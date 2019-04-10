@@ -27,7 +27,15 @@
           <mat-option *ngFor="let user of users" [value]="user">{{user.firstName + " " + user.lastName}}</mat-option>
         </mat-select>
       </mat-form-field>
+     
+
     </div>
+    <div>
+      <mat-form-field>
+              <input matInput placeholder="estimated time" formControlName="estimate">
+      </mat-form-field>
+    </div>
+
     <div class="form_list">
       <span *ngIf="issue.relatedRequirements && issue.relatedRequirements.length > 0">Related Requirements:</span>
       <ul>

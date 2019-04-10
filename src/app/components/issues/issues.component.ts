@@ -116,6 +116,7 @@ export class IssuesComponent implements OnInit {
 		issueRequest.description = issue.description;
 		issueRequest.priority = issue.priority;
 		issueRequest.status = issue.status;
+		issueRequest.estimate = issue.estimate;
 		if (issue.createdByUser) {
 			issueRequest.createdByUserId = issue.createdByUser.userId;
 		}
