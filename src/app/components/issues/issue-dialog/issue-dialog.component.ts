@@ -54,6 +54,7 @@ export class IssueDialogComponent implements OnInit {
     'status': new FormControl('', [Validators.required]),
     'priority': new FormControl('', [Validators.required]),
     'assigneduser': new FormControl(''),
+    'estimate': new FormControl(''),
   });;
 
 
@@ -115,6 +116,7 @@ export class IssueDialogComponent implements OnInit {
     this.issueForm.controls['status'].setValue(this.issue.status);
     this.issueForm.controls['priority'].setValue(this.issue.priority);
     this.issueForm.controls['assigneduser'].setValue(this.issue.assignedUser);
+    this.issueForm.controls['estimate'].setValue(this.issue.estimate);
   }
 
   mapFormIssueToIssue() {
@@ -123,6 +125,11 @@ export class IssueDialogComponent implements OnInit {
     this.issue.status = this.issueForm.get("status").value;
     this.issue.priority = this.issueForm.get("priority").value;
     this.issue.assignedUser = this.issueForm.get("assigneduser").value;
+    this.issue.estimate = this.issueForm.get("estimate").value;
+
   }
 
 }
+
+
+
