@@ -49,7 +49,7 @@ export class RequirementFormComponent implements OnInit {
       this.newRequirement.dueDate = new Date(this.newRequirement.dueDate).toISOString().substring(0,19);
       this.newRequirement.status = 'NEW';
       this.newRequirement.comments = [];
-      this.newRequirement.relatedIssue = this.requirementForm.value.issue.id;
+      //this.newRequirement.relatedIssue = this.requirementForm.value.issue.id;
 
 
        this.requirementService.createRequirement(this.newRequirement)
