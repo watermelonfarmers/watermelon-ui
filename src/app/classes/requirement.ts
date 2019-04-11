@@ -11,6 +11,7 @@ export class Requirement {
     comments : [];
     assignedToUser : any;
     archived : boolean;
+    relatedIssue : {issueId : Number, title: String} [];
     //url : string;
 
     constructor() {
@@ -26,6 +27,7 @@ export class Requirement {
         this.dueDate = '';
         this.assignedToUser = '';
         this.archived = true;
+        this.relatedIssue = [];
         //this.url = 'https://www.pivotaltracker.com/story/show/164053311';
 
     }
