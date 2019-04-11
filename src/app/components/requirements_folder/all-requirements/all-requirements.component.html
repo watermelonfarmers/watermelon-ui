@@ -1,0 +1,38 @@
+<section class="requirement-container">
+  <mat-card class="requirement-card">
+    <div class="action-bar">
+      <form [formGroup]="requirementsForm" #formDir="ngForm">
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="statusSelect" disableOptionCentering>
+            <mat-option>All</mat-option>
+            <mat-option *ngFor="let s of status" [value]="s.value">
+              {{s.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <i class="action-bar__new glyphicon glyphicon-plus" title="Create New Requirement" (click)="addNewRequirement()"></i>
+    </div>
+    <div class="requirement-card__header">
+      <h2 class="requirement-card__header--title">{{title}}</h2>
+      <p class="requirement-card__header--count" *ngIf="requirmenets">{{count}}</p>
+    </div>
+    <div class="requirement-list">
+      <mat-nav-list class="requirement-list__list">
+        <a mat-list-item *ngFor="let requirement of filteredRequirements()" (click)="editRequirement(requirement)">
+          <div class="requirement-list__description">
+            <p class="requirement-list__title">{{requirement.title}}</p>
+            <p class="requirmeent-list__date">{{requirement.createdTime | dateFormat}}</p>
+          </div>
+          <div class="requirement-list__actions">
+              <p class="requirmeent-list__assignedToUser">{{requirement.assignedToUser.firstName + ' ' + requirement.assignedToUser.lastName}}</p>
+              <i class="issue-list__delete">
+                  <mat-icon [inline]="true" (click)="deleteIssue(issue.issueId);$event.stopPropagation()">delete</mat-icon>
+              </i>
+          </div>
+        </a>
+      </mat-nav-list>
+    </div>
+  </mat-card>
+</section>

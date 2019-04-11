@@ -44,7 +44,7 @@ export class EditRequirementFormComponent implements OnInit {
       private requirementService: RequirementService,
       public dialogRef : MatDialogRef<EditRequirementFormComponent>,
     ) {
-      this.id = data.id;
+      this.id = data.requirement.id;
     }
 
   getCurrentRequirement() {

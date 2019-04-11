@@ -1,0 +1,116 @@
+mat-card {
+    margin-top: 10rem;
+    max-height: 600px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.90);
+}
+
+p {
+    margin: 0;
+}
+
+.mat-list-item:hover {
+    background : rgba(0, 0, 0, .04);
+}
+
+.requirement-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 8 rem;
+}
+
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+
+    &__new {
+        font-size: 2.2rem;
+    }
+
+    &__new:hover {
+        color: green;
+        cursor: pointer;
+    }
+}
+
+.requirement-card {
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &--title {
+            font-size: 2.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            //margin-left: 10px;
+            line-height: 1;
+        }
+
+        &--count {
+            font-size: 1.2rem;
+            color: white;
+            box-sizing: content-box;
+            margin: 0;
+            line-height: 1;
+            padding: 6px 10px 6px 10px;
+            border-radius: 1000%;
+            background-color: rgba(49, 124, 42, 0.856)
+
+        }
+    }
+}
+
+.requirement-list {
+    display: flex;
+    width: 100rem;
+    font-size: 1.8rem;
+
+    &__list {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    &__description {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    &__title {
+        font-weight: 300;
+        letter-spacing: .1rem;
+    }
+
+    &__date {
+        font-weight: 300;
+        font-size: 1.3rem;
+    }
+
+    &__actions {
+        margin-left:auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__assignedToUser {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        letter-spacing: .1rem;
+    }
+
+    &__delete {
+        margin-left: 2rem;
+        
+        font-size: 2rem;
+
+        &:hover{
+            color: #e53935;
+        }
+    }
+
+}
