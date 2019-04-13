@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 import { ProjectsComponent } from './projects.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,8 @@ describe('ProjectComponent', () => {
         NoopAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
-        MatIconModule
+        MatIconModule,
+        HttpClientTestingModule
       ],
       declarations: [ ProjectsComponent ]
     })

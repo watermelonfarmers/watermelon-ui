@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
-export interface Project {
-  id: number;
-  title: string;
-}
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/classes/project';
 
 @Component({
   selector: 'app-project',
@@ -12,43 +9,47 @@ export interface Project {
 })
 export class ProjectsComponent implements OnInit {
 
-  public projects: Array<Project> = [
-    { id: 1, title: 'Watermelon' },
-    { id: 2, title: 'Mango' },
-    { id: 3, title: 'Apple' },
-    { id: 4, title: 'Bananas' }
-  ];
+  public projects: Array<Project>;
 
   public newProject: string;
   public currentProject: Project;
 
-  constructor() { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
-    if (sessionStorage.getItem('project')) {
-      this.currentProject = JSON.parse(sessionStorage.getItem('project'));
-    } else {
-      this.setProject(this.projects[0]);
-    }
+
+    this.loadProjects();
   }
 
   setProject(project: Project)   {
     sessionStorage.setItem('project', JSON.stringify(project));
     this.currentProject = project
     this.closeNav();
+    this.projectService.announceProjectChange("yes");
   }
 
-
   isActiveProject(project: Project) {
-    return this.currentProject.title === project.title;
+    return this.currentProject.projectName === project.projectName;
+  }
+
+  loadProjects() {
+    this.projectService.getProjects().subscribe(results => {
+      this.projects = results;
+      if (sessionStorage.getItem('project')) {
+        this.currentProject = this.projectService.getActiveProject();
+      } else {
+        this.setProject(this.projects[0]);
+      }
+    });
   }
 
   addProject() {
     if (this.newProject === undefined || this.newProject === '') {return;}
     console.log(this.newProject);
 
-    let project: Project = {id: 12, title: this.newProject}
-    this.projects.push(project)
+    let project: Project = new Project();
+    project.projectName = this.newProject;
+    this.projectService.createProject(project).subscribe(result => this.loadProjects());
     this.newProject = '';
   }
 

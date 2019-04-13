@@ -6,7 +6,7 @@
   <div class="side-bar__container">
     <a href="javascript:void(0)" class="side-bar__close" (click)="closeNav()">&times;</a>
     <a class="side-bar__link" href="javascript:void(0)" *ngFor="let project of projects"
-      (click)="setProject(project)" [ngClass]="{'active': isActiveProject(project)}">{{project.title}}</a>
+      (click)="setProject(project)" [ngClass]="{'active': isActiveProject(project)}">{{project.projectName}}</a>
     <div class="side-bar__footer">
       <mat-form-field class="mat-form-field-dark">
         <input matInput placeholder="add project" [(ngModel)]="newProject">
