@@ -29,6 +29,10 @@ p{
         color: green;
         cursor: pointer;
     }
+
+    &__search {
+        margin-left: 3rem;
+    }
 }
 
 .issue-card {
@@ -95,13 +99,13 @@ p{
     }
 
     &__priority {
-        font-family: 'Roboto', sans-serif;
-        font-weight: 300;
+        font-size: 36px;
         letter-spacing: .1rem;
+        margin-left: 10px;
     }
 
     &__delete {
-        margin-left: 2rem;
+        margin-left: 1.5rem;
         
         font-size: 2rem;
 
@@ -109,4 +113,26 @@ p{
             color: #e53935;
         }
     }
+
+    &__user {
+        height: 30px;
+        width: 30px;
+        border-radius: 100%;
+    }
+
+    &__status {
+        margin-right: 2rem;
+    }
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.yellow {
+    color: orange;
 }

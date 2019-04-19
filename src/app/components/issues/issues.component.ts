@@ -30,11 +30,19 @@ export class IssuesComponent implements OnInit {
 	];
 
 	issuesForm: FormGroup = new FormGroup({
-		'statusSelect': new FormControl('')
+		'statusSelect': new FormControl(''),
+		'search': new FormControl('')
 	});
+
+	private sortOrder = {
+		'NEW': 1,
+		'IN PROGRESS': 2,
+		'COMPLETED': 3
+	};
 
 	public issues: Array<Issue>;
 	public filter: string;
+	public searchFilter: string;
 	public title: string;
 	public count: number;
 
@@ -43,6 +51,7 @@ export class IssuesComponent implements OnInit {
 	ngOnInit() {
 		this.getIssues();
 		this.issuesForm.get('statusSelect').valueChanges.subscribe(value => this.filter = value)
+		this.issuesForm.get('search').valueChanges.subscribe(value => this.searchFilter = value)
 
 		if (this.activatedRoute.snapshot.params['issueId']) {
 			this.getOneIssueForNavigation(this.activatedRoute.snapshot.params['issueId']);
@@ -52,9 +61,19 @@ export class IssuesComponent implements OnInit {
 	}
 
 	filteredIssues() {
-		if (this.issues && this.filter) {
+		if (this.issues && this.filter && this.searchFilter) {
 			this.title = this.filter + " Issues";
 			let filteredIssues = this.issues.filter(item => item.status == this.filter);
+			filteredIssues = filteredIssues.filter(item => item.title.toLowerCase().includes(this.searchFilter.toLowerCase()));
+			this.count = filteredIssues.length
+			return filteredIssues;
+		} else if (this.issues && this.filter) {
+			this.title = this.filter + " Issues";
+			let filteredIssues = this.issues.filter(item => item.status == this.filter);
+			this.count = filteredIssues.length
+			return filteredIssues;
+		} else if (this.issues && this.searchFilter) {
+			let filteredIssues = this.issues.filter(item => item.title.toLowerCase().includes(this.searchFilter.toLowerCase()));
 			this.count = filteredIssues.length
 			return filteredIssues;
 		}
@@ -100,15 +119,52 @@ export class IssuesComponent implements OnInit {
 	//TOOD we might want to revisit how priority works
 	translatePriority(priority: number): String {
 		if (priority === 1) {
-			return "Low"
+			return "keyboard_arrow_down"
 		}
 		else if (priority === 5) {
-			return "Medium"
+			return "keyboard_arrow_up"
 		}
 		else if (priority === 10) {
-			return "High";
+			return "keyboard_capslock";
 		}
 	}
+
+	translatePriorityText(priority: number): String {
+		if (priority === 1) {
+			return "Low Priority"
+		}
+		else if (priority === 5) {
+			return "Normal Priority"
+		}
+		else if (priority === 10) {
+			return "High Priority";
+		}
+	}
+
+		//TOOD we might want to revisit how priority works
+		translateStatus(priority: string): String {
+			if (priority === 'NEW') {
+				return "priority_high"
+			}
+			else if (priority === 'IN PROGRESS') {
+				return "trending_flat"
+			}
+			else if (priority === "COMPLETED") {
+				return "done";
+			}
+		}
+	
+		translateStatusText(priority: string): String {
+			if (priority === 'NEW') {
+				return "New"
+			}
+			else if (priority === 'IN PROGRESS') {
+				return "In Progress"
+			}
+			else if (priority === "COMPLETED") {
+				return "Completed";
+			}
+		}
 
 	/***************************************************************************
 	 * MAPPERS
@@ -136,7 +192,7 @@ export class IssuesComponent implements OnInit {
 	getIssues() {
 
 		this.issueService.getIssues().subscribe(results => {
-			this.issues = results;
+			this.issues = results.sort((a, b) => this.sortOrder[a.status] - this.sortOrder[b.status]);
 		});
 	}
 
@@ -149,7 +205,7 @@ export class IssuesComponent implements OnInit {
 	}
 
 	updateIssue(issue: IssueRequest, issueId: number) {
-		this.issueService.updateIssue(issue, issueId).subscribe();
+		this.issueService.updateIssue(issue, issueId).subscribe(result => this.getIssues());
 	}
 
 	deleteIssue(issueId: number) {
