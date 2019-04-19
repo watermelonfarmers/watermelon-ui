@@ -11,8 +11,11 @@
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
+				<mat-form-field class="action-bar__search">
+					<input matInput placeholder="Search" formControlName="search">
+				</mat-form-field>
 			</form>
-			<i class="action-bar__new glyphicon glyphicon-plus" title="Create New Issue" (click)="addNewIssue()"></i>
+			<i class="action-bar__new glyphicon glyphicon-plus" matTooltip="Create Issue" (click)="addNewIssue()"></i>
 		</div>
 		<div class="issue-card__header">
 			<h2 class="issue-card__header--title">{{title}}</h2>
@@ -21,15 +24,20 @@
 		<div class="issue-list">
 			<mat-nav-list class="issue-list__list">
 				<a mat-list-item *ngFor="let issue of filteredIssues()" (click)="editIssue(issue)">
+					<i class="issue-list__status" >
+						<mat-icon [ngClass]="{'green': true}"  matTooltip="{{translateStatusText(issue.status)}}" >{{translateStatus(issue.status)}}</mat-icon>
+					</i>
 					<div class="issue-list__description">
 						<p class="issue-list__title">{{issue.title}}</p>
 						<p class="issue-list__date">{{issue.created | dateFormat}}</p>
 					</div>
 					<div class="issue-list__actions">
-						<!-- <p class="issue-list__user">{{issue.createdByUser.userName}}</p> -->
-						<p class="issue-list__priority">{{translatePriority(issue.priority)}}</p>
+						<img *ngIf="issue.assignedUser" src="{{issue.assignedUser.avatarUrl}}" alt="user picture" class="issue-list__user" matTooltip="{{issue.assignedUser.firstName}}">
+						<i class="issue-list__priority" >
+							<mat-icon [ngClass]="{'red': issue.priority === 10, 'yellow': issue.priority === 5, 'green': issue.priority === 1}"  matTooltip="{{translatePriorityText(issue.priority)}}" >{{translatePriority(issue.priority)}}</mat-icon>
+						</i>
 						<i class="issue-list__delete">
-							<mat-icon [inline]="true" (click)="deleteIssue(issue.issueId);$event.stopPropagation()">delete</mat-icon>
+							<mat-icon [inline]="true" (click)="deleteIssue(issue.issueId);$event.stopPropagation()"  matTooltip="Delete Issue">delete</mat-icon>
 						</i>
 					</div>
 				</a>

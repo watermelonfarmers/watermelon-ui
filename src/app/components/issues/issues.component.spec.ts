@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatDialogModule, MatIconModule } from "@angular/material";
+import { MatCardModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatListModule, MatDialogModule, MatIconModule, MatTooltipModule } from "@angular/material";
 
 import { IssuesComponent } from './issues.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -28,6 +28,7 @@ describe('IssuesComponent', () => {
         MatListModule,
         MatDialogModule,
         MatIconModule,
+        MatTooltipModule,
         RouterModule.forRoot([])
       ],
       declarations: [ IssuesComponent, DateFormatPipe ]
