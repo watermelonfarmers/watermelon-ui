@@ -8,6 +8,7 @@ import { RequirementFormComponent } from '../requirement-form/requirement-form.c
 import { EditRequirementFormComponent } from '../edit-requirement-form/edit-requirement-form.component';
 import { of, BehaviorSubject } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
+import { Issue } from 'src/app/classes/issue';
 
 @Component({
   selector: 'app-requirements',

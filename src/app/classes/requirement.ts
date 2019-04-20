@@ -12,6 +12,8 @@ export class Requirement {
     assignedToUser : any;
     archived : boolean;
     projectId: number;
+    relatedIssueId : any;
+    estimatedTime : string;
     //url : string;
 
     constructor() {
@@ -27,6 +29,8 @@ export class Requirement {
         this.dueDate = '';
         this.assignedToUser = '';
         this.archived = true;
+        this.relatedIssueId = null;
+        this.estimatedTime = '';
         //this.url = 'https://www.pivotaltracker.com/story/show/164053311';
 
     }

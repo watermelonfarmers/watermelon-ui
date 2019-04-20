@@ -1,5 +1,6 @@
 <div *ngIf="dataAvailable" class='container'>
     <mat-card>
+      <mat-dialog-content>
       <mat-card-title color='primary'>Edit Requirement</mat-card-title>
       <mat-card-subtitle>Created By {{this.requirement.createdByUser}}</mat-card-subtitle>
       <form [formGroup]='editRequirementForm' #formDir="ngForm">
@@ -44,6 +45,22 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field class="container__relatedIssue">
+            <mat-label>Related Issue</mat-label>
+            <mat-select formControlName="relatedIssue" name="relatedIssue" [(ngModel)]="requirement.relatedIssueId">
+              <mat-option *ngFor="let issue of issues" [value]="issue">
+                {{issue.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field class="container__estimatedTime">
+            <mat-label>Estimated Time</mat-label>
+            <mat-select formControlName="estimatedTime" name="estimatedTime" [(ngModel)]="requirement.estimatedTime">
+              <mat-option *ngFor="let time of estimate" [value]="time">
+                {{time}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         <mat-form-field class="container__dueDate">
           <input matInput [matDatepicker]="dueDate" placeholder="Choose a due date"
            formControlName="dueDate" [min]="currentDate" [(ngModel)]="requirement.dueDate">
@@ -54,6 +71,7 @@
             <button mat-raised-button color="primary" (click)="editRequirement()">Edit Requirement</button>
         </div>
       </form>
+    </mat-dialog-content>
     </mat-card>
   </div>
 
