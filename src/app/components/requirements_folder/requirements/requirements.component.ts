@@ -59,6 +59,7 @@ export class RequirementsComponent implements OnInit {
             return requirement;
           }
         });
+        console.log(this.requirements);
     });
   }
 
