@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { User } from '../classes/user';
 import {environment} from '../../environments/environment';
+import { Issue } from '../classes/issue';
 
 const httpOptions = {
   headers : new HttpHeaders({
@@ -23,6 +24,7 @@ export class RequirementService {
   constructor(private http: HttpClient) { }
 
   usersUrl = environment.url + "/users";
+  issuesUrl = environment.url +'/issues';
   requirementsUrl= environment.url + "/requirements";
 
   readRequirements() : Observable<Requirement []>{
@@ -50,5 +52,9 @@ export class RequirementService {
 
   getUsers() : Observable<User []>{
     return this.http.get<User []>(this.usersUrl);
+  }
+
+  getIssues() : Observable<Issue []>{
+    return this.http.get<Issue []>(this.issuesUrl);
   }
 }
