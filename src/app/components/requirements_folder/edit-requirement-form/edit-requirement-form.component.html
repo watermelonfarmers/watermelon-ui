@@ -44,6 +44,14 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field class="container__relatedIssue">
+            <mat-label>Related Issue</mat-label>
+            <mat-select formControlName="relatedIssue" name="relatedIssue" [(ngModel)]="requirement.relatedIssueId">
+              <mat-option *ngFor="let issue of issues" [value]="issue">
+                {{issue.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         <mat-form-field class="container__dueDate">
           <input matInput [matDatepicker]="dueDate" placeholder="Choose a due date"
            formControlName="dueDate" [min]="currentDate" [(ngModel)]="requirement.dueDate">

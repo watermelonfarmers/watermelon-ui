@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { User } from '../../../classes/user';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogRef } from '@angular/material';
+import { Issue } from 'src/app/classes/issue';
 
 @Component({
   selector: 'app-edit-requirement-form',
@@ -18,6 +19,7 @@ export class EditRequirementFormComponent implements OnInit {
   statusOpts: string[] = ['NEW', 'IN PROGRESS', 'ACCEPTED'];
   priority : string [] = ['NORMAL', 'URGENT', 'VERY URGENT']
   users: User [];
+  issues : Issue [];
   currentDate : Date = new Date();
   dataAvailable : boolean = false;
   createdBy : User;
@@ -33,6 +35,7 @@ export class EditRequirementFormComponent implements OnInit {
     'priority' : new FormControl('', Validators.required),
     'assignedToUser': new FormControl('', Validators.required),
     'createdByUser' : new FormControl('', Validators.required),
+    'relatedIssue' : new FormControl(''),
     'dueDate' : new FormControl('', Validators.required)
   });
 
@@ -68,6 +71,15 @@ export class EditRequirementFormComponent implements OnInit {
     })
   };
 
+  getIssues() {
+    this.requirementService.getIssues()
+    .subscribe(issues => {
+      this.issues = issues;
+    })
+  }
+
+  
+
   editRequirement() {
     this.requirement.title = this.editRequirementForm.value.title;
     this.requirement.description = this.editRequirementForm.value.description;
@@ -80,6 +92,7 @@ export class EditRequirementFormComponent implements OnInit {
     this.requirement.priority = this.editRequirementForm.value.priority;
     this.requirement.comments = [];
     this.requirement.createdByUser = this.requirement.createdByUser.userId;
+    this.requirement.relatedIssueId = this.editRequirementForm.value.relatedIssue.issueId;
 
     this.requirementService.updateRequirement(this.requirement)
       .subscribe(() => {
@@ -90,6 +103,7 @@ export class EditRequirementFormComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
+    this.getIssues();
     this.getCurrentRequirement();
   }
 
