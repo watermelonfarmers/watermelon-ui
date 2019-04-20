@@ -96,7 +96,9 @@ export class EditRequirementFormComponent implements OnInit {
     this.requirement.priority = this.editRequirementForm.value.priority;
     this.requirement.comments = [];
     this.requirement.createdByUser = this.requirement.createdByUser.userId;
-    this.requirement.relatedIssueId = this.editRequirementForm.value.relatedIssue.issueId;
+    if (this.editRequirementForm.value.relatedIssue) {
+      this.requirement.relatedIssueId = this.editRequirementForm.value.relatedIssue.issueId;
+    }
     this.requirement.estimatedTime = this.editRequirementForm.value.estimatedTime;
 
     this.requirementService.updateRequirement(this.requirement)
