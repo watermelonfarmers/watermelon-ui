@@ -26,7 +26,6 @@ export class RequirementService {
 
   usersUrl = environment.url + "/users";
   requirementsUrl= environment.url + "/requirements";
-  issuesUrl = environment.url + "/issues";
 
   readRequirements() : Observable<Requirement []>{
 
@@ -65,9 +64,5 @@ export class RequirementService {
 
   getUsers() : Observable<User []>{
     return this.http.get<User []>(this.usersUrl);
-  }
-  
-  getIssues() : Observable<Issue []> {
-    return this.http.get<Issue []>(this.issuesUrl);
   }
 }
