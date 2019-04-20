@@ -17,7 +17,8 @@ export class RequirementFormComponent implements OnInit {
 
   users: User [];
   issues : Issue [];
-  priority : string [] = ['NORMAL', 'URGENT', 'VERY URGENT']
+  priority : string [] = ['NORMAL', 'URGENT', 'VERY URGENT'];
+  estimate : string [] = ['ONE WEEK', 'TWO WEEKS', 'THREE WEEKS', 'MORE THAN THREE WEEKS'];
   currentDate = new Date();
 
 
@@ -27,6 +28,7 @@ export class RequirementFormComponent implements OnInit {
     'priority' : new FormControl('', Validators.required),
     'assignedToUser': new FormControl('', Validators.required),
     'relatedIssue' : new FormControl(''),
+    'estimatedTime' : new FormControl(''),
     'dueDate' : new FormControl('', Validators.required)
   });
 
@@ -50,6 +52,7 @@ export class RequirementFormComponent implements OnInit {
       this.newRequirement.status = 'NEW';
       this.newRequirement.comments = [];
       this.newRequirement.relatedIssueId = this.requirementForm.value.relatedIssue.issueId;
+      this.newRequirement.estimatedTime = this.requirementForm.value.estimatedTime;
 
       console.log(this.newRequirement);
 

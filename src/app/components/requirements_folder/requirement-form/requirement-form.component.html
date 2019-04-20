@@ -1,5 +1,6 @@
 <div class='container'>
   <mat-card>
+    <mat-dialog-content>
     <mat-card-title color='primary'>Add Requirement</mat-card-title>
     <form [formGroup]='requirementForm' #formDir="ngForm">
       <mat-form-field class="container__title">
@@ -42,6 +43,14 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field class="container__estimatedTime">
+            <mat-label>Estimated Time</mat-label>
+            <mat-select formControlName="estimatedTime" name="estimatedTime">
+              <mat-option *ngFor="let time of estimate" [value]="time">
+                {{time}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
       <mat-form-field class="container__dueDate">
         <input matInput [matDatepicker]="dueDate" placeholder="Choose a due date"
          formControlName="dueDate" [min]="currentDate">
@@ -55,5 +64,6 @@
           <button mat-raised-button color="primary" (click)="addRequirement()">Add Requirement</button> 
       </div> -->
     </form>
+  </mat-dialog-content>
   </mat-card>
 </div>

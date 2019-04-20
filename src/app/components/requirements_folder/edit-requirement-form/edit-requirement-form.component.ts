@@ -17,7 +17,8 @@ export class EditRequirementFormComponent implements OnInit {
 
 
   statusOpts: string[] = ['NEW', 'IN PROGRESS', 'ACCEPTED'];
-  priority : string [] = ['NORMAL', 'URGENT', 'VERY URGENT']
+  priority : string [] = ['NORMAL', 'URGENT', 'VERY URGENT'];
+  estimate : string [] = ['ONE WEEK', 'TWO WEEKS', 'THREE WEEKS', 'MORE THAN THREE WEEKS'];
   users: User [];
   issues : Issue [];
   currentDate : Date = new Date();
@@ -36,6 +37,7 @@ export class EditRequirementFormComponent implements OnInit {
     'assignedToUser': new FormControl('', Validators.required),
     'createdByUser' : new FormControl('', Validators.required),
     'relatedIssue' : new FormControl(''),
+    'estimatedTime' : new FormControl(''),
     'dueDate' : new FormControl('', Validators.required)
   });
 
@@ -93,6 +95,7 @@ export class EditRequirementFormComponent implements OnInit {
     this.requirement.comments = [];
     this.requirement.createdByUser = this.requirement.createdByUser.userId;
     this.requirement.relatedIssueId = this.editRequirementForm.value.relatedIssue.issueId;
+    this.requirement.estimatedTime = this.editRequirementForm.value.estimatedTime;
 
     this.requirementService.updateRequirement(this.requirement)
       .subscribe(() => {
