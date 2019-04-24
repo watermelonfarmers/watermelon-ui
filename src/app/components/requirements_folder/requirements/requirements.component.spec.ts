@@ -27,7 +27,9 @@ describe('RequirementsComponent', () => {
       comments : [],
       assignedToUser : 'User 2',
       archived : true,
-      projectId: 1
+      projectId: 1,
+      relatedIssueId: 1,
+      estimatedTime: "test"
     },
     {
       id: 2,
@@ -42,7 +44,9 @@ describe('RequirementsComponent', () => {
       comments : [],
       assignedToUser : 'User 2',
       archived : true,
-      projectId : 1
+      projectId : 1,
+      relatedIssueId: 1,
+      estimatedTime: "test"
     },
 ];
 

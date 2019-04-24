@@ -4,6 +4,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MessagesComponent } from './messages.component';
 import { DateFormatPipe } from 'src/app/pipes/date-format.pipe';
+import { MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('MessagesComponent', () => {
   let component: MessagesComponent;
@@ -13,7 +15,11 @@ describe('MessagesComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        NoopAnimationsModule
       ],
       declarations: [ MessagesComponent, DateFormatPipe ]
     })
