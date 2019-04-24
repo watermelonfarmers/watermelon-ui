@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatCardModule, MatFormFieldModule, MatInputModule, MAT_DIALOG_DATA } from "@angular/material";
+import { MatCardModule, MatFormFieldModule, MatInputModule, MAT_DIALOG_DATA, MatDialogModule } from "@angular/material";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatSelectModule, MatNativeDateModule } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -9,6 +9,7 @@ import { RequirementFormComponent } from './requirement-form.component';
 import { RequirementService } from 'src/app/services/requirement.service';
 import { MockRequirementService } from 'src/app/testing/mockRequirementService';
 import { MatDialogRef } from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RequirementFormComponent', () => {
   let component: RequirementFormComponent;
@@ -25,7 +26,9 @@ describe('RequirementFormComponent', () => {
           MatSelectModule,
           MatNativeDateModule,
           MatDatepickerModule,
-          NoopAnimationsModule
+          NoopAnimationsModule,
+          MatDialogModule,
+          HttpClientTestingModule
         ],
       declarations: [ RequirementFormComponent ],
       providers: [

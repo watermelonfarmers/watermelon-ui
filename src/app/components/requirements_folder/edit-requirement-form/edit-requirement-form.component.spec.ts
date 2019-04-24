@@ -11,6 +11,7 @@ import { MockRequirementService } from 'src/app/testing/mockRequirementService';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogRef } from '@angular/material';
 import { Requirement } from 'src/app/classes/requirement';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EditRequirementFormComponent', () => {
   let component: EditRequirementFormComponent;
@@ -30,6 +31,7 @@ describe('EditRequirementFormComponent', () => {
         MatNativeDateModule,
         MatDatepickerModule,
         NoopAnimationsModule,
+        HttpClientTestingModule
       ],
       declarations: [ EditRequirementFormComponent ],
       providers: [
