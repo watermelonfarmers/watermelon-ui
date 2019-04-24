@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Requirement } from '../classes/requirement';
-import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { User } from '../classes/user';
 import {environment} from '../../environments/environment';
 import { ProjectService } from './project.service';
-import { Issue } from '../classes/issue';
 
 const httpOptions = {
   headers : new HttpHeaders({

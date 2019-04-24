@@ -67,6 +67,12 @@
           <mat-datepicker-toggle [for]="dueDate"></mat-datepicker-toggle>
           <mat-datepicker #dueDate></mat-datepicker>
         </mat-form-field>
+        <div class="form_list" *ngIf="requirement.relatedIssue">
+            <span>Related Issues:</span>
+            <ul>
+                <a routerLink="/issues/{{requirement.relatedIssue.issueId}}" (click)="cancel()"> {{ requirement.relatedIssue.title }} </a>    
+            </ul>
+        </div>
         <div class="container__edit-requirement">
             <button mat-raised-button color="primary" (click)="editRequirement()">Edit Requirement</button>
         </div>

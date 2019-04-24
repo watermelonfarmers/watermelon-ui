@@ -24,7 +24,7 @@ export class EditRequirementFormComponent implements OnInit {
   issues : Issue [];
   currentDate : Date = new Date();
   dataAvailable : boolean = false;
-  createdBy : User;
+  createdByUser : number;
 
   requirement : Requirement;
   //id : Number = Number(this.route.params['value'].id);
@@ -36,7 +36,6 @@ export class EditRequirementFormComponent implements OnInit {
     'status' : new FormControl('', Validators.required),
     'priority' : new FormControl('', Validators.required),
     'assignedToUser': new FormControl('', Validators.required),
-    'createdByUser' : new FormControl('', Validators.required),
     'relatedIssue' : new FormControl(''),
     'estimatedTime' : new FormControl(''),
     'dueDate' : new FormControl('', Validators.required)
@@ -58,6 +57,7 @@ export class EditRequirementFormComponent implements OnInit {
     this.requirementService.readOneRequirement(this.id)
     .subscribe((requirement) => {
       this.requirement = requirement;
+      this.createdByUser = requirement.createdByUser.userId;
       this.requirement.createdByUser = this.requirement.createdByUser.firstName + ' ' + this.requirement.createdByUser.lastName;
       this.requirement.createdTime = this.requirement.createdTime.split("T")[0];
       this.requirement.lastModifiedTime = this.requirement.lastModifiedTime.split("T")[0];
@@ -82,12 +82,13 @@ export class EditRequirementFormComponent implements OnInit {
     })
   }
 
-  
+  cancel(): void {
+    this.dialogRef.close();
+  }
 
   editRequirement() {
     this.requirement.title = this.editRequirementForm.value.title;
     this.requirement.description = this.editRequirementForm.value.description;
-    this.requirement.assignedToUser = this.editRequirementForm.value.assignedToUser.userId;
     this.requirement.dueDate = new Date(this.editRequirementForm.value.dueDate).toISOString().substring(0,19);
     this.requirement.createdTime = new Date().toISOString().substring(0,19);
     this.requirement.lastModifiedTime = new Date().toISOString().substring(0,19);
@@ -95,11 +96,16 @@ export class EditRequirementFormComponent implements OnInit {
     this.requirement.status = this.editRequirementForm.value.status;
     this.requirement.priority = this.editRequirementForm.value.priority;
     this.requirement.comments = [];
-    this.requirement.createdByUser = this.requirement.createdByUser.userId;
-    if (this.editRequirementForm.value.relatedIssue) {
+    this.requirement.estimatedTime = this.editRequirementForm.value.estimatedTime;
+    this.requirement.assignedToUser = this.editRequirementForm.value.assignedToUser.userId;
+    this.requirement.createdByUser = this.createdByUser;
+
+    if(this.editRequirementForm.value.relatedIssue == undefined) {
+      this.requirement.relatedIssueId = null;
+    }
+    else {
       this.requirement.relatedIssueId = this.editRequirementForm.value.relatedIssue.issueId;
     }
-    this.requirement.estimatedTime = this.editRequirementForm.value.estimatedTime;
 
     this.requirementService.updateRequirement(this.requirement)
       .subscribe(() => {
