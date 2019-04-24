@@ -6,6 +6,7 @@ import { Router} from '@angular/router';
 import { User } from '../../../classes/user';
 import { MatDialogRef } from '@angular/material';
 import { Issue } from 'src/app/classes/issue';
+import { IssueService } from 'src/app/services/issue.service';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class RequirementFormComponent implements OnInit {
 
   currentUser = JSON.parse(sessionStorage.getItem('user'));
 
-  constructor(private router : Router, private requirementService: RequirementService,
+  constructor(private router : Router, private requirementService: RequirementService, private issueService: IssueService,
     public dialogRef : MatDialogRef<RequirementFormComponent>) {};
 
   addRequirement() {
@@ -71,7 +72,7 @@ export class RequirementFormComponent implements OnInit {
   };
 
   getIssues() {
-    this.requirementService.getIssues()
+    this.issueService.getIssues()
     .subscribe(issues => {
       this.issues = issues;
     })

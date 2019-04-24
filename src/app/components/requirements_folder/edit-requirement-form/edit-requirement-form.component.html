@@ -39,7 +39,7 @@
         </mat-form-field>
         <mat-form-field class="container__assignedToUser">
           <mat-label>Assigned To</mat-label>
-          <mat-select formControlName="assignedToUser" name="assignedToUser" [(ngModel)]="requirement.assignedToUser">
+          <mat-select [compareWith]="compareUser" formControlName="assignedToUser" name="assignedToUser" [(ngModel)]="requirement.assignedToUser">
             <mat-option *ngFor="let user of users" [value]="user">
               {{user.firstName + ' ' + user.lastName}}
             </mat-option>
@@ -47,7 +47,7 @@
         </mat-form-field>
         <mat-form-field class="container__relatedIssue">
             <mat-label>Related Issue</mat-label>
-            <mat-select formControlName="relatedIssue" name="relatedIssue" [(ngModel)]="requirement.relatedIssueId">
+            <mat-select [compareWith]="compareIssue" formControlName="relatedIssue" name="relatedIssue" [(ngModel)]="requirement.relatedIssue">
               <mat-option *ngFor="let issue of issues" [value]="issue">
                 {{issue.title}}
               </mat-option>

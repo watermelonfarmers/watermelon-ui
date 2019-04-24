@@ -7,7 +7,7 @@ import { User } from '../../../classes/user';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MatDialogRef } from '@angular/material';
 import { Issue } from 'src/app/classes/issue';
-import { debug } from 'util';
+import { IssueService } from "../../../services/issue.service";
 
 @Component({
   selector: 'app-edit-requirement-form',
@@ -47,6 +47,7 @@ export class EditRequirementFormComponent implements OnInit {
       public data : any, 
       private router: Router, 
       private requirementService: RequirementService,
+      private issueService: IssueService,
       public dialogRef : MatDialogRef<EditRequirementFormComponent>,
     ) {
       this.id = data.id;
@@ -75,13 +76,15 @@ export class EditRequirementFormComponent implements OnInit {
   };
 
   getIssues() {
-    this.requirementService.getIssues()
+    this.issueService.getIssues()
     .subscribe(issues => {
       this.issues = issues;
     })
   }
 
-  
+  cancel(): void {
+    this.dialogRef.close();
+  }
 
   editRequirement() {
     this.requirement.title = this.editRequirementForm.value.title;
@@ -115,6 +118,18 @@ export class EditRequirementFormComponent implements OnInit {
     this.getUsers();
     this.getIssues();
     this.getCurrentRequirement();
+  }
+
+  compareUser(user1: User, user2: User): boolean {
+    if (user1 && user2) {
+      return user1.userId === user2.userId;
+    }
+  }
+
+  compareIssue(issue1: Issue, issue2: Issue): boolean {
+    if (issue1 && issue2) {
+      return issue1.issueId === issue2.issueId;
+    }
   }
 
   };

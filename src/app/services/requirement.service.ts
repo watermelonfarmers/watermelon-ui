@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Requirement } from '../classes/requirement';
-import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { User } from '../classes/user';
 import {environment} from '../../environments/environment';
 import { ProjectService } from './project.service';
-import { Issue } from '../classes/issue';
 
 const httpOptions = {
   headers : new HttpHeaders({
@@ -26,7 +24,6 @@ export class RequirementService {
 
   usersUrl = environment.url + "/users";
   requirementsUrl= environment.url + "/requirements";
-  issuesUrl = environment.url + "/issues";
 
   readRequirements() : Observable<Requirement []>{
 
@@ -65,9 +62,5 @@ export class RequirementService {
 
   getUsers() : Observable<User []>{
     return this.http.get<User []>(this.usersUrl);
-  }
-  
-  getIssues() : Observable<Issue []> {
-    return this.http.get<Issue []>(this.issuesUrl);
   }
 }
