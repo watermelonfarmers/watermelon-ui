@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MessagesService } from './messages.service';
+import { MessagesService } from '../../services/messages.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 import { MessageRequest } from 'src/app/classes/message-request';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { ChannelService } from 'src/app/services/channel.service';
+import { Channel } from 'src/app/classes/channel';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-messages',
@@ -14,47 +17,56 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 export class MessagesComponent implements OnInit {
   @ViewChild('messages') messagesWrapper: ElementRef;
 
-  subscription;
+  channelList: Array<Channel> = new Array();
+  messageList: Array<Message> = new Array();;
+  selectedChannel: Channel;
+  messageRefreshSubscription;
   userInput = '';
-  testDate = new Date();
-  user: User;
-  groupChats: any[] = [{
-    firstName: 'John', lastName: 'Snow', fullName: 'General Chat', createdDate: this.testDate,
-    messages: Array<Message>(),
-  }];
-  selectedGroup = this.groupChats[0];
+  currentUser: User;
+  newChannel: string;
 
-  constructor(private http: HttpClient, private messagesService: MessagesService, private userService: UserService) {
-    this.user = this.userService.getUser();
+
+  constructor(private http: HttpClient, 
+    private messagesService: MessagesService, 
+    private userService: UserService, 
+    private channelService: ChannelService,
+    private projectService: ProjectService) {
+    this.currentUser = this.userService.getUser();
   }
 
   ngOnInit(): void {
-    this.getMessages();
+    this.getChannels();
     this.scrollToBottom();
-    this.subscription = setInterval(() => {
+    this.messageRefreshSubscription = setInterval(() => {
       this.getMessages();
     }, 2500);
+
+    this.projectService.projectChanged$.subscribe(() => this.getChannels());
   }
 
   ngOnDestroy() {
-    clearInterval(this.subscription);
+    clearInterval(this.messageRefreshSubscription);
   }
 
   scrollToBottom() {
-    //console.log('Scrolling to Bottom');
     setTimeout(() => {
       this.messagesWrapper.nativeElement.scrollTop = this.messagesWrapper.nativeElement.scrollHeight;
     }, 100);
   }
 
   getMessages() {
-    this.messagesService.getMessages().subscribe((response) => {
-      //console.log(response);
-      this.groupChats[0].messages = response;
-      const messagesLength = this.groupChats[0].messages.length;
-      // if (this.groupChats[0].messages[messagesLength - 1].created_by_user !== this.user.userName) {
-      //   this.scrollToBottom();
-      // }
+    if (this.selectedChannel) {
+      this.messagesService.getMessagesByChannelId(this.selectedChannel.id).subscribe((response) => {
+        this.messageList = response;
+      });
+    }
+  }
+
+  getChannels() {
+    this.channelService.getChannels().subscribe(response => {
+      this.channelList = response;
+      this.selectedChannel = this.channelList[0];
+      this.getMessages();
     });
   }
 
@@ -63,11 +75,10 @@ export class MessagesComponent implements OnInit {
       return;
     }
     let newMessage: MessageRequest = new MessageRequest();
-    newMessage.channelId = 194; //TODO this should be the current channelId
-    newMessage.userId = this.user.userId;
+    newMessage.channelId = this.selectedChannel.id;
+    newMessage.userId = this.currentUser.userId;
     newMessage.message = this.userInput;
-    
-    this.selectedGroup.messages.push(newMessage);
+
     this.messagesService.creatMessage(newMessage).subscribe((response) => {
       this.getMessages();
       return response;
@@ -75,11 +86,20 @@ export class MessagesComponent implements OnInit {
     this.userInput = '';
     this.scrollToBottom();
   }
-  createChatGroup() {
-    // this.messagesService.createChat();
+
+  changeSelectedChannel(channel: Channel) {
+    this.selectedChannel = channel;
+    this.getMessages();
   }
-  changeSelectedGroup(group: any) {
-    this.selectedGroup = group;
+
+  addChannel() {
+    if (this.newChannel === undefined || this.newChannel === '') {return;}
+    console.log(this.newChannel);
+
+    let channel: Channel = new Channel();
+    channel.name = this.newChannel;
+    this.channelService.createChannel(channel).subscribe(() => this.getChannels());
+    this.newChannel = '';
   }
 
 }
