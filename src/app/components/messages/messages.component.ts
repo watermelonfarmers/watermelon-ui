@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MessagesService } from './messages.service';
+import { MessagesService } from '../../services/messages.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 import { MessageRequest } from 'src/app/classes/message-request';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { ChannelService } from 'src/app/services/channel.service';
+import { Channel } from 'src/app/classes/channel';
 
 @Component({
   selector: 'app-messages',
@@ -14,26 +16,23 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 export class MessagesComponent implements OnInit {
   @ViewChild('messages') messagesWrapper: ElementRef;
 
+  channelList: Array<Channel> = new Array();
+  messageList: Array<Message> = new Array();;
+  selectedChannel: Channel;
+
   subscription;
   userInput = '';
   testDate = new Date();
   user: User;
-  groupChats: any[] = [{
-    firstName: 'John', lastName: 'Snow', fullName: 'General Chat', createdDate: this.testDate,
-    messages: Array<Message>(),
-  }];
-  selectedGroup = this.groupChats[0];
+  
 
-  constructor(private http: HttpClient, private messagesService: MessagesService, private userService: UserService) {
+  constructor(private http: HttpClient, private messagesService: MessagesService, private userService: UserService, private channelService: ChannelService) {
     this.user = this.userService.getUser();
   }
 
   ngOnInit(): void {
-    this.getMessages();
+    this.getChannels();
     this.scrollToBottom();
-    this.subscription = setInterval(() => {
-      this.getMessages();
-    }, 2500);
   }
 
   ngOnDestroy() {
@@ -41,20 +40,26 @@ export class MessagesComponent implements OnInit {
   }
 
   scrollToBottom() {
-    //console.log('Scrolling to Bottom');
     setTimeout(() => {
       this.messagesWrapper.nativeElement.scrollTop = this.messagesWrapper.nativeElement.scrollHeight;
     }, 100);
   }
 
   getMessages() {
-    this.messagesService.getMessages().subscribe((response) => {
-      //console.log(response);
-      this.groupChats[0].messages = response;
-      const messagesLength = this.groupChats[0].messages.length;
-      // if (this.groupChats[0].messages[messagesLength - 1].created_by_user !== this.user.userName) {
-      //   this.scrollToBottom();
-      // }
+    //clearInterval(this.subscription);
+    this.messagesService.getMessagesByChannelId(this.selectedChannel.id).subscribe((response) => {
+      this.messageList = response;
+      // this.subscription = setInterval(() => {
+      //   this.getMessages();
+      // }, 2500);
+    });
+  }
+
+  getChannels() {
+    this.channelService.getChannels().subscribe(response => {
+      this.channelList = response;
+      this.selectedChannel = this.channelList[0];
+      this.getMessages();
     });
   }
 
@@ -63,11 +68,10 @@ export class MessagesComponent implements OnInit {
       return;
     }
     let newMessage: MessageRequest = new MessageRequest();
-    newMessage.channelId = 194; //TODO this should be the current channelId
+    newMessage.channelId = this.selectedChannel.id;
     newMessage.userId = this.user.userId;
     newMessage.message = this.userInput;
     
-    this.selectedGroup.messages.push(newMessage);
     this.messagesService.creatMessage(newMessage).subscribe((response) => {
       this.getMessages();
       return response;
@@ -75,11 +79,10 @@ export class MessagesComponent implements OnInit {
     this.userInput = '';
     this.scrollToBottom();
   }
-  createChatGroup() {
-    // this.messagesService.createChat();
-  }
-  changeSelectedGroup(group: any) {
-    this.selectedGroup = group;
+
+  changeSelectedChannel(channel: Channel) {
+    this.selectedChannel = channel;
+    this.getMessages();
   }
 
 }
