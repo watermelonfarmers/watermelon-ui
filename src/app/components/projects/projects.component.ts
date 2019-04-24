@@ -45,7 +45,6 @@ export class ProjectsComponent implements OnInit {
 
   addProject() {
     if (this.newProject === undefined || this.newProject === '') {return;}
-    console.log(this.newProject);
 
     let project: Project = new Project();
     project.projectName = this.newProject;

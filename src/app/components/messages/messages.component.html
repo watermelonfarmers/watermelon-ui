@@ -3,24 +3,25 @@
     <div class="inbox_msg">
       <div class="inbox_people">
         <div class="headind_srch">
-          <div class="recent_heading">
-            <h4>Recent</h4>
-          </div>
-          <div class="srch_bar">
+          <mat-form-field>
+            <input matInput placeholder="add channel" [(ngModel)]="newChannel">
+          </mat-form-field>
+          <i class="add-channel glyphicon glyphicon-plus" title="Add Channel" (click)="addChannel()"></i>
+          <!-- <div class="srch_bar">
             <div class="stylish-input-group">
               <input type="text" class="search-bar" placeholder="Search">
-              <!-- <button type="button" (click) = "createChatGroup()"class = "btn btn-primary">+</button> -->
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="inbox_chat">
           <div *ngFor="let channel of channelList" (click)="changeSelectedChannel(channel)"
             [ngClass]="{'active_chat': selectedChannel === channel}" class="chat_list">
             <div class="chat_people">
-              <!-- <div class="chat_img"> <img src="./assets/user-profile.png" alt="user image"> </div> -->
+              <div class="chat_img"> <img src="http://www.gravatar.com/avatar/3b3be63a4c2a439b013787725dfce{{channel.id}}?d=identicon"
+                  alt="user image"> </div>
               <div class="chat_ib">
-                <h5>{{channel.name}} <span class="chat_date">{{channel.createdTime}}</span></h5>
-                <!-- <p>Test, this is where the most recent message will appear.</p> -->
+                <h5>{{channel.name}} </h5>
+                <span class="chat_date">{{channel.createTime | dateFormat}}</span>
               </div>
             </div>
           </div>
@@ -29,7 +30,7 @@
       <div class="mesgs">
         <div #messages class="msg_history">
           <ng-container *ngFor="let message of messageList">
-            <div *ngIf="message.user && (message.user.userName !== user.userName); else outgoingMessage"
+            <div *ngIf="message.user && (message.user.userName !== currentUser.userName); else outgoingMessage"
               class="incoming_msg">
               <div class="incoming_msg_img">
                 <img src="{{message.user.avatarUrl}}" alt="user image" class="user-image">

@@ -141,3 +141,13 @@ img{ max-width:100%;}
 .user-image{
   border-radius: 100%;
 }
+
+.add-channel {
+  margin-left: 20px;
+  font-size: 2rem;
+}
+
+.add-channel:hover{
+  color: green;
+  cursor: pointer;
+}

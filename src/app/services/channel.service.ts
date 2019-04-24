@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Channel } from '../classes/channel';
+import { ProjectService } from './project.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +13,27 @@ export class ChannelService {
 
   private channelUrl: string = environment.url + "/channels"
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private projectService: ProjectService) { }
 
   getChannels(): Observable<Array<Channel>> {
     let headers: HttpHeaders = this.getHeaders();
 
-    return this.http.get<Array<Channel>>(this.channelUrl, { headers: headers, withCredentials: true });
+    let project = this.projectService.getActiveProject();
+    let url = this.channelUrl;
+    if (project) {
+      url = url + "?project=" + project.projectId 
+    }
+
+    return this.http.get<Array<Channel>>(url, { headers: headers, withCredentials: true });
   }
 
   createChannel(channel: Channel): Observable<Object> {
     let headers: HttpHeaders = this.getHeaders();
 
-    return this.http.post(this.channelUrl, JSON.stringify(channel), { headers: headers, withCredentials: true });
+    let project = this.projectService.getActiveProject();
+    channel.projectId = project.projectId;
+
+    return this.http.post<Channel>(this.channelUrl, channel, { headers: headers, withCredentials: true });
   }
 
   updateChannel(channel: Channel, channelId: number): Observable<Object> {

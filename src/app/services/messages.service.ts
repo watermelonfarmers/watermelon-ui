@@ -4,6 +4,7 @@ import { map } from 'rxjs/internal/operators/map';
 import {environment} from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { MessageRequest } from '../classes/message-request';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,8 @@ export class MessagesService {
 
   }
 
-  creatMessage(message) {
-    const stringifyMessage = JSON.stringify(message);
-    return this.httpClient.post(this.url, message).pipe(map((response)=> {
-      return response;
-    }));
+  creatMessage(message : MessageRequest) {
+    return this.httpClient.post<MessageRequest>(this.url, message);
   }
 
   getMessages(): Observable<Array<Message>>{
@@ -33,7 +31,6 @@ export class MessagesService {
     return this.httpClient.get<Array<Message>>(messageUrl, { headers: headers, withCredentials: true });
   }
 
-  
   getHeaders(): HttpHeaders {
     return new HttpHeaders()
       .set('X-Requested-With', 'XMLHttpRequest')
