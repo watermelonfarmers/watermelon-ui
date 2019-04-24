@@ -36,12 +36,12 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getChannels();
-    this.scrollToBottom();
     this.messageRefreshSubscription = setInterval(() => {
       this.getMessages();
     }, 2500);
 
     this.projectService.projectChanged$.subscribe(() => this.getChannels());
+    this.scrollToBottom();
   }
 
   ngOnDestroy() {
@@ -67,6 +67,7 @@ export class MessagesComponent implements OnInit {
       this.channelList = response;
       this.selectedChannel = this.channelList[0];
       this.getMessages();
+      this.scrollToBottom();
     });
   }
 
